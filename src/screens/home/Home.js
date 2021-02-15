@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import 'font-awesome/css/font-awesome.min.css';
 import '@fortawesome/fontawesome-free-solid';
 import '@fortawesome/fontawesome-svg-core';
@@ -49,7 +49,6 @@ const styles = (theme => ({
     },
     gridCard: { //Style for the Grid card
         '@media (min-width: 1200px)': { //Making the code responsive to different screens
-
             'flex-grow': '0',
             'max-width': '25%',
             'flex-basis': '25%',
@@ -60,6 +59,12 @@ const styles = (theme => ({
             'max-width': '33%',
             'flex-basis': '33%',
         },
+
+        '@media (max-width:960px)': { //Making the code responsive to different screens
+            'flex-grow': '0',
+            'max-width': '50%',
+            'flex-basis': '50%',
+        },
     },
 
     card: { //Style for the card and responsive code for different screen size
@@ -69,6 +74,9 @@ const styles = (theme => ({
         },
         '@media (min-width: 960px) and (max-width:1300px)': { //Making the code responsive to different screens
             height: "375px",
+        },
+        '@media (max-width:960px)': { //Making the code responsive to different screens
+            height: "250px",
         }
     },
 
@@ -81,7 +89,7 @@ const styles = (theme => ({
             "font-size": "30px",
         },
         '@media (max-width: 960px)': {
-            "font-size": "40px",
+            "font-size": "20px",
         }
     },
     categories: { //Style for the categories in the card
@@ -93,7 +101,7 @@ const styles = (theme => ({
             "font-size": "20px",
         },
         '@media (max-width: 960px)': {
-            "font-size": "22px",
+            "font-size": "18px",
         }
     }
 }))
@@ -106,64 +114,70 @@ class Home extends Component {
 
     render() {
         let displayRestaurants = this.props.displayRestaurants;
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
             <div>
                 <Header
                     baseUrl={this.props.baseUrl}
                     filterRestaurants={this.props.filterRestaurants}
                 />
-                <Grid container spacing={3} wrap="wrap" alignContent="center" className={classes.grid}>
-                    {displayRestaurants.length > 0 ? (
-                        <div>
-                            {displayRestaurants.map(restaurant => (
-                                <Grid key={restaurant.id} item xs={12} sm={6} md={3} className={classes.gridCard}>
-                                    <Card className={classes.card}>
-                                        <CardActionArea className={classes.cardActionArea} onClick={() => this.restaurantCardClicked(restaurant.id)}>
-                                            <CardMedia
-                                                className={classes.media}
-                                                image={restaurant.photo_URL}
-                                                title={restaurant.restaurant_name}
-                                            />
-                                            <CardContent className={classes.cardContent}>
-                                                <Typography className={classes.title} variant="h5" component="h2">
-                                                    {restaurant.restaurant_name}
-                                                </Typography>
-                                            </CardContent>
-                                            <CardContent className={classes.cardContent}>
-                                                <Typography variant="subtitle1" component="p" className={classes.categories}>
-                                                    {restaurant.categories}
-                                                </Typography>
-                                            </CardContent>
-                                            <CardContent className={classes.cardContent}>
-                                                <div className="card-bottom-info">
+                <div className="flex-container">
+                    <Grid container spacing={3}>
+                        {displayRestaurants.length > 0 ? (
+                                displayRestaurants.map(restaurant => (
+                                    <Grid key={restaurant.id} item xs={3} className={classes.gridCard}>
+                                        <Card className={classes.card}>
+                                            <CardActionArea className={classes.cardActionArea}
+                                                            onClick={() => this.restaurantCardClicked(restaurant.id)}>
+                                                <CardMedia
+                                                    className={classes.media}
+                                                    image={restaurant.photo_URL}
+                                                    title={restaurant.restaurant_name}
+                                                />
+                                                <CardContent className={classes.cardContent}>
+                                                    <Typography className={classes.title} variant="h5" component="h2">
+                                                        {restaurant.restaurant_name}
+                                                    </Typography>
+                                                </CardContent>
+                                                <CardContent className={classes.cardContent}>
+                                                    <Typography variant="subtitle1" component="p"
+                                                                className={classes.categories}>
+                                                        {restaurant.categories}
+                                                    </Typography>
+                                                </CardContent>
+                                                <CardContent className={classes.cardContent}>
+                                                    <div className="card-bottom-info">
                                                 <span className="rest-rating">
                                                     <span>
-                                                        <FontAwesomeIcon icon="star" size="lg" color="white" />
+                                                        <FontAwesomeIcon icon="star" size="lg" color="white"/>
                                                     </span>
-                                                    <Typography variant="caption" component="p" >{restaurant.customer_rating}</Typography>
-                                                    <Typography variant="caption" component="p" >({restaurant.number_customers_rated})</Typography>
+                                                    <Typography variant="caption"
+                                                                component="p">{restaurant.customer_rating}</Typography>
+                                                    <Typography variant="caption"
+                                                                component="p">({restaurant.number_customers_rated})</Typography>
                                                 </span>
-                                                    <span className="rest-for-two">
-                                                    <Typography variant="caption" component="p" style={{fontSize: '14px'}}>
+                                                        <span className="rest-for-two">
+                                                    <Typography variant="caption" component="p"
+                                                                style={{fontSize: '14px'}}>
                                                         <i className="fa fa-inr" aria-hidden="true"></i>
                                                         {restaurant.average_price}
                                                     </Typography>
-                                                    <Typography variant="caption" component="p" style={{fontSize: '14px'}}>for two</Typography>
+                                                    <Typography variant="caption" component="p"
+                                                                style={{fontSize: '14px'}}>for two</Typography>
                                                 </span>
-                                                </div>
-                                            </CardContent>
-                                        </CardActionArea>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </div>
-                    ) : (
-                        <div>
-                            No restaurant with the given name.
-                        </div>
-                    )}
-                </Grid>
+                                                    </div>
+                                                </CardContent>
+                                            </CardActionArea>
+                                        </Card>
+                                    </Grid>
+                                ))
+                        ) : (
+                            <div>
+                                No restaurant with the given name.
+                            </div>
+                        )}
+                    </Grid>
+                </div>
             </div>
         );
     }
