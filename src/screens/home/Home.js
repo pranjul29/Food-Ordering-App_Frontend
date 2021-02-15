@@ -108,8 +108,7 @@ const styles = (theme => ({
 
 class Home extends Component {
 
-    restaurantCardClicked(id) {
-
+    restaurantCardClicked = (restaurantId) => {
     }
 
     render() {
