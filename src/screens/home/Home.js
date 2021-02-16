@@ -136,6 +136,7 @@ class Home extends Component {
   };
 
       restaurantCardClicked = (restaurantId) => {
+          this.props.history.push('/restaurant/' + restaurantId);
     }
 
     render() {
