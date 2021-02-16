@@ -1,55 +1,108 @@
-import React, { Component } from "react";
-import Header from "../../common/header/Header";
+import React, { Component } from 'react';
+import { RestaurantCard } from '../../components';
+import { filterRestaurantsByName, getAllRestaurants } from '../../api';
+import HeaderLayout from '../HeaderLayout';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Grid, Container, withStyles, Typography } from '@material-ui/core';
+import './Home.css';
+
+const useStyles = (theme) => ({
+  root: {
+    marginTop: '2rem',
+  },
+});
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
-      searchResults: [],
+      restaurants: [],
+      isLoading: true,
     };
   }
 
-  getSearchResults = (text) => {
-    let data = null;
-    let xhr = new XMLHttpRequest();
-    let that = this;
-    xhr.addEventListener("readystatechange", function() {
-      if (this.readyState === 4 && this.status === 200) {
-        that.setState({
-          searchResults: JSON.parse(this.responseText).restaurants,
-        });
-      }
-      else if(this.readyState === 4)
-        if(JSON.parse(this.responseText).code === 'RNF-001')
-          that.setState({searchResults: []})
+  componentDidMount() {
+    this.setState({
+      isLoading: true,
     });
-    xhr.open("GET", this.props.baseUrl + "/restaurant/name/" + text);
-    xhr.setRequestHeader("Cache-Control", "no-cache");
-    xhr.send(data);
+    this.loadAllRestaurants();
+  }
+
+  loadAllRestaurants = async () => {
+    let {
+      data: { restaurants },
+    } = await getAllRestaurants();
+    this.setState({
+      restaurants,
+      isLoading: false,
+    });
+  };
+
+  onChangeHandler = async (e) => {
+    if (e.target.value === '') {
+      this.loadAllRestaurants();
+    } else {
+      this.setState({
+        isLoading: true,
+      });
+      let { data } = await filterRestaurantsByName(e.target.value);
+      this.setState({
+        restaurants: data.restaurants || [],
+      });
+      this.setState({
+        isLoading: false,
+      });
+    }
+  };
+
+  onRestaurantClick = (id) => {
+    this.props.history.push('/restaurant/' + id);
   };
 
   render() {
-    let displayRestaurants = this.state.searchResults;
+    const { classes, history } = this.props;
+    const { isLoading } = this.state;
     return (
-      <div>
-        <Header
-          baseUrl={this.props.baseUrl}
-          getSearchResults={this.getSearchResults}
+      <>
+        <HeaderLayout
+          onChangeHandler={this.onChangeHandler.bind(this)}
+          history={history}
+          showSearch={true}
         />
-        {displayRestaurants === null || displayRestaurants.length === 0 ? (
-          <div>
-              No restaurant with the given name.
-          </div>
-        ) : (
-          <div>
-            {displayRestaurants.map((temp) => {
-              return <div key={temp.id}>{temp.restaurant_name}</div>;
-            })}
-          </div>
-        ) }
-      </div>
+        <Container className={classes.root}>
+          {isLoading && (
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <CircularProgress />
+            </div>
+          )}
+
+          <Grid container spacing={3}>
+            {!isLoading &&
+              this.state.restaurants.map((item) => {
+                return (
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    lg={3}
+                    key={item.id}
+                    onClick={this.onRestaurantClick.bind(this, item.id)}
+                  >
+                    <RestaurantCard key={item.id} restaurant={item} />
+                  </Grid>
+                );
+              })}
+            {!isLoading && this.state.restaurants.length === 0 && (
+              <Typography variant="body1">
+                No restaurants with the given name
+              </Typography>
+            )}
+          </Grid>
+        </Container>
+      </>
     );
   }
 }
 
-export default Home;
+export default withStyles(useStyles)(Home);
