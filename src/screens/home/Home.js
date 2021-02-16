@@ -5,6 +5,7 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
+      showSearchResults: false,
       searchResults: [],
     };
   }
@@ -14,14 +15,15 @@ class Home extends Component {
     let xhr = new XMLHttpRequest();
     let that = this;
     xhr.addEventListener("readystatechange", function() {
+      if (this.readyState === 4) {
+        if (text.length > 0) that.setState({ showSearchResults: true });
+        else that.setState({ showSearchResults: false });
+      }
       if (this.readyState === 4 && this.status === 200) {
         that.setState({
           searchResults: JSON.parse(this.responseText).restaurants,
         });
-      }
-      else if(this.readyState === 4)
-        if(JSON.parse(this.responseText).code === 'RNF-001')
-          that.setState({searchResults: []})
+      } else if (this.readyState === 4) if (JSON.parse(this.responseText).code === "RNF-001") that.setState({ searchResults: [] });
     });
     xhr.open("GET", this.props.baseUrl + "/restaurant/name/" + text);
     xhr.setRequestHeader("Cache-Control", "no-cache");
@@ -29,7 +31,10 @@ class Home extends Component {
   };
 
   render() {
-    let displayRestaurants = this.state.searchResults;
+    let displayRestaurants;
+    this.state.showSearchResults
+      ? (displayRestaurants = this.state.searchResults)
+      : (displayRestaurants = this.props.displayRestaurants);
     return (
       <div>
         <Header
@@ -37,16 +42,14 @@ class Home extends Component {
           getSearchResults={this.getSearchResults}
         />
         {displayRestaurants === null || displayRestaurants.length === 0 ? (
-          <div>
-              No restaurant with the given name.
-          </div>
+          <div>No restaurant with the given name.</div>
         ) : (
           <div>
             {displayRestaurants.map((temp) => {
               return <div key={temp.id}>{temp.restaurant_name}</div>;
             })}
           </div>
-        ) }
+        )}
       </div>
     );
   }
