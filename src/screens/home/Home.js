@@ -32,10 +32,18 @@ const styles = (theme => ({
         // paddingTop: '56.25%', // 16:9
     },*/
     cardContent: { // Styles for the card content
-        "padding": "10px",
-        "margin-left": "20px",
-        "margin-right": "20px",
-        "height": "20%",
+        '@media (min-width: 601px)': {
+            "padding": "10px",
+            "margin-left": "20px",
+            "margin-right": "20px",
+            "height": "20%",
+        },
+        '@media (max-width: 600px)': {
+            "padding": "2px",
+            "margin-left": "5px",
+            "margin-right": "5px",
+            "height": "20%",
+        },
         "display": "flex",
         "align-items": "center",
     },
@@ -82,6 +90,7 @@ const styles = (theme => ({
 
     title: { //Style for the Title in the Card
         "font-size": "25px",
+        "font-weight": "bold",
         '@media (min-width: 1300px)': {
             "font-size": "40px",
         },
@@ -90,6 +99,9 @@ const styles = (theme => ({
         },
         '@media (max-width: 960px)': {
             "font-size": "20px",
+        },
+        '@media (max-width: 600px)': {
+            "font-size": "95%",
         }
     },
     categories: { //Style for the categories in the card
@@ -102,8 +114,21 @@ const styles = (theme => ({
         },
         '@media (max-width: 960px)': {
             "font-size": "18px",
+        },
+        '@media (max-width: 600px)': {
+            "font-size": "75%",
         }
+
+    },
+    PriceForTwoText: {
+        '@media (min-width: 601px)': {
+            "font-size": "110%",
+        },
+        '@media (max-width: 600px)': {
+            "font-size": "70%",
+        },
     }
+
 }))
 
 class Home extends Component {
@@ -188,13 +213,13 @@ class Home extends Component {
                                                 </span>
                                                         <span className="rest-for-two">
                                                     <Typography variant="caption" component="p"
-                                                                style={{fontSize: '14px'}}>
+                                                                /*style={{fontSize: '14px'}}*/
+                                                                className={classes.PriceForTwoText}>
                                                         <i className="fa fa-inr" aria-hidden="true"></i>
-                                                        {restaurant.average_price}
+                                                        {restaurant.average_price} for Two
                                                     </Typography>
-                                                    <Typography variant="caption" component="p"
-                                                                style={{fontSize: '14px'}}>for two</Typography>
-                                                </span>
+
+                                                      </span>
                                                     </div>
                                                 </CardContent>
                                             </CardActionArea>
