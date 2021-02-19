@@ -18,7 +18,7 @@ import validator from "validator";
 import Snackbar from "@material-ui/core/Snackbar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const customModalStyle = {
   content: {
@@ -78,13 +78,13 @@ class Header extends Component {
       signupcontactNo: "",
       signupcontactNoRequired: "dispNone",
       inValidsignupcontactNo: "dispNone",
-      registeredContactNo: "dispNone",
+      registeredContactNo: "dispNone"
     };
   }
 
   searchBarTextChangeHandler = (e) => {
-    this.props.filterRestaurants(e.target.value)
-  }
+    this.props.getSearchResults(e.target.value);
+  };
 
   openModalHandler = () => {
     this.setState({ modalIsOpen: true });
@@ -227,6 +227,9 @@ class Header extends Component {
 
   signupClickHandler = (e) => {
     this.setState({ registeredContactNo: "dispNone" });
+    this.setState({ inValidEmail: "dispNone" });
+    this.setState({ inValidsignupcontactNo: "dispNone" });
+    this.setState({weakPassword : "dispNone"})
     //input validation
     this.state.firstName.trim() === ""
       ? this.setState({ firstNameRequired: "dispBlock" })
@@ -387,7 +390,13 @@ class Header extends Component {
                 open={Boolean(this.state.anchorEl)}
                 onClose={this.closeMenuHandler}
               >
-                <MenuItem component={Link} to={"/profile"} onClick={this.closeMenuHandler}>My Profile</MenuItem>
+                <MenuItem
+                  component={Link}
+                  to={"/profile"}
+                  onClick={this.closeMenuHandler}
+                >
+                  My Profile
+                </MenuItem>
                 <MenuItem onClick={this.logoutClickHandler}>Logout</MenuItem>
               </Menu>
             </div>
