@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Header, MessageSnackbar } from './../../components';
-import { login, registration } from './../../api';
-import { isValidContact, isValidPassword } from './../../common/utils';
-import { userLogout } from './../../common/utils';
+import { Header, MessageSnackbar } from '../../components';
+import { login, registration } from '../../api';
+import { isValidContact, isValidPassword } from '../utils';
+import { userLogout } from '../utils';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as EmailValidator from 'email-validator';
-import { isUserLoggedIn as userLoogedIn } from './../../common/utils';
+import { isUserLoggedIn as userLoogedIn } from '../utils';
 import {
   withStyles,
   Tabs,
@@ -19,7 +19,7 @@ import {
   Button,
 } from '@material-ui/core';
 import Modal from 'react-modal';
-import './styles.css';
+import './Header.css';
 
 const customStyles = {
   content: {

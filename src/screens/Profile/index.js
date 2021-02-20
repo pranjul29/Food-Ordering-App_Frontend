@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HeaderLayout from './../HeaderLayout';
+import HeaderLayout from '../../common/HeaderLayout/Header';
 import { Container } from '@material-ui/core';
 
 class Profile extends Component {
