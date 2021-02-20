@@ -49,9 +49,10 @@ TabContainer.prototypes = {
 };
 
 class Header extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
+      user:props.user,
       userLoggedIn:
         sessionStorage.getItem("access-token") == null ? false : true,
       anchorEl: null,
@@ -178,6 +179,7 @@ class Header extends Component {
             that.setState({ loginSnackbarIsOpen: true });
             that.closeModalHandler();
             that.setState({ userLoggedIn: true });
+            that.props.setUser(response)
           } else if (this.readyState === 4) {
             let response = JSON.parse(this.responseText);
             if (that.state.invalidContactNo === "dispNone") {

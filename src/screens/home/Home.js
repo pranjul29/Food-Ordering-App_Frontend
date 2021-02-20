@@ -175,6 +175,8 @@ class Home extends Component {
                 <Header
                     baseUrl={this.props.baseUrl}
                     getSearchResults={this.getSearchResults}
+                    setUser={this.props.setUser}
+                    user={this.props.user}
                 />
                 <div className="flex-container">
                     <Grid container spacing={3} className="grid">
