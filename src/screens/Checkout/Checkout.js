@@ -13,7 +13,7 @@ import {
   OrderSummary,
 } from './../../components';
 import { getSelectedItems, getRestaurantInfo } from './../../common/utils';
-import HeaderLayout from './../HeaderLayout';
+import HeaderLayout from '../../common/HeaderLayout/Header';
 import { saveOrder } from './../../api';
 import { MessageSnackbar } from '../../components';
 const useStyles = makeStyles((theme) => ({

@@ -1,26 +1,26 @@
-import React, {Component} from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Home from '../screens/home/Home'
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './home/Home';
+import Profile from './Profile';
+import RestaurantDetail from './Detail/Detail';
+import Checkout from './Checkout/Checkout';
+import PrivateRoute from './../common/PrivateRoute';
 
-class Controller extends Component {
-    constructor() {
-        super();
-        this.state = {
-            baseUrl : "http://localhost:8080/api"
-        }
-    }
+const Routes = (props) => {
+  return (
+    <Router>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={({ history }, props) => <Home history={history} />}
+        ></Route>
+        <PrivateRoute component={Profile} path="/profile" />
+        <Route component={RestaurantDetail} path="/restaurant/:id"></Route>
+        <PrivateRoute component={Checkout} path="/checkout" />
+      </Switch>
+    </Router>
+  );
+};
 
-    render() {
-        return(
-            <div>
-                <Router>
-                    <Route exact path='/'>
-                        <Home baseUrl={this.state.baseUrl}/>
-                    </Route>
-                </Router>
-            </div>
-        );
-    }
-}
-
-export default Controller;
+export default Routes;

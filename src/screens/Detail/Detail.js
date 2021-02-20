@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { getRestaurantById } from '../../api';
 import RestaurantDetailsCard from '../../components/RestaurantDetailsCard';
-import HeaderLayout from '../HeaderLayout';
+import HeaderLayout from '../../common/HeaderLayout/Header';
 import {
   Container,
   Grid,

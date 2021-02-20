@@ -8,8 +8,15 @@
     }
 }
 
+.search-bar {
+    width: 350px;
+    display: flex;
+    align-items: center;
+}
+
 @media screen and (max-width: 600px) {
     .header {
+        width: 100%;
         height: 140px;
         padding: 10px 15px 10px 15px;
         background-color: hsl(199deg 20% 18%);
@@ -18,15 +25,12 @@
         flex-direction: column;
         justify-content: space-between;
     }
+    .search-bar {
+        width: 250px;
+    }
     .logo .search-bar .userButton {
         padding: 20px;
     }
-}
-
-.search-bar {
-    width: 350px;
-    display: flex;
-    align-items: center;
 }
 div .search-bar ::after {
     border-bottom: 2px solid white !important;
