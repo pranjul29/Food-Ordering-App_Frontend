@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import {Card, CardContent, Typography} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
 import joinClassNames from 'classnames';
+
 const useStyles = makeStyles({
   root: {
     //width: 275,
@@ -34,7 +35,7 @@ export default function AddressCard(props) {
     locality,
     city,
     pincode,
-    state: { state_name },
+    state: {state_name},
   } = props.address;
   const classes = useStyles();
   let active = props.active ? classes.active : '';
@@ -56,7 +57,7 @@ export default function AddressCard(props) {
         </Typography>
         <Typography variant="body2" component="p">
           {pincode}
-          <br />
+          <br/>
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           {state_name}

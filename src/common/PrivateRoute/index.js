@@ -1,8 +1,8 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { isUserLoggedIn } from './../utils';
+import {Redirect, Route} from 'react-router-dom';
+import {isUserLoggedIn} from './../utils';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({component: Component, ...rest}) => {
   let isLoggedIn = isUserLoggedIn();
   return (
     // Show the component only when the user is logged in
@@ -11,7 +11,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        isLoggedIn ? <Component {...props} /> : <Redirect to="/" />
+        isLoggedIn ? <Component {...props} /> : <Redirect to="/"/>
       }
     />
   );

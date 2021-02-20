@@ -1,6 +1,6 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { Typography, Grid } from '@material-ui/core';
+import {withStyles} from '@material-ui/core/styles';
+import {Grid, Typography} from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import '../RestaurantDetailsCard/styles.css';
 
@@ -32,7 +32,7 @@ const useStyles = (theme) => ({
 });
 
 function RestaurantDetailsCard(props) {
-  const { classes } = props;
+  const {classes} = props;
   let {
     restaurant: {
       photo_URL,
@@ -53,33 +53,33 @@ function RestaurantDetailsCard(props) {
     <div>
       <Grid container className={classes.containerpadding}>
         <Grid item xs={10} md={3} className={classes.image__container}>
-          <img src={photo_URL} alt={restaurant_name} />
+          <img src={photo_URL} alt={restaurant_name}/>
         </Grid>
         <Grid item xs={12} md={9} className={classes.textcontainer}>
           <Typography variant="h6" component="p">
             {restaurant_name}
           </Typography>
-          <br />
+          <br/>
           {address !== null && address !== undefined ?
-          <Typography variant="caption" component="p">
-            {address && address.locality.toUpperCase()}
-          </Typography>:""
-                    }          <br />
-                       {categories != null && categories !== undefined ?
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            style={{ wordWrap: 'break-word' }}
-          >
-            {getCategories(categories)}
-          </Typography>
-          :""}
-          <br />
+            <Typography variant="caption" component="p">
+              {address && address.locality.toUpperCase()}
+            </Typography> : ""
+          } <br/>
+          {categories != null && categories !== undefined ?
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              style={{wordWrap: 'break-word'}}
+            >
+              {getCategories(categories)}
+            </Typography>
+            : ""}
+          <br/>
           <Grid container>
             <Grid item xs={6} className={classes.customer_rating}>
               <Typography variant="body1" component="span">
-                <StarIcon />
+                <StarIcon/>
               </Typography>
               <Typography variant="body1" component="span">
                 {customer_rating}
@@ -96,12 +96,12 @@ function RestaurantDetailsCard(props) {
           <Grid container>
             <Grid item xs={6}>
               <Typography variant="body1">
-                AVERAGE RATING BY <br /> {number_customers_rated} CUSTOMERS
+                AVERAGE RATING BY <br/> {number_customers_rated} CUSTOMERS
               </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography variant="body1">
-                AVERAGE COST FOR <br />
+                AVERAGE COST FOR <br/>
                 TWO PEOPLE
               </Typography>
             </Grid>

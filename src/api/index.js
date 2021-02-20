@@ -73,8 +73,7 @@ export const getAllStates = async () => {
   try {
     let api = `${API_GET_ALLSTATES}`;
     return await axios.get(api);
-  }
-  catch (e) {
+  } catch (e) {
     return e;
   }
 };

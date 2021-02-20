@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import HeaderLayout from '../../common/HeaderLayout/Header';
-import { Container } from '@material-ui/core';
+import {Container} from '@material-ui/core';
 
 class Profile extends Component {
   render() {
-    let { history } = this.props;
+    let {history} = this.props;
     return (
       <>
-        <HeaderLayout history={history} />
+        <HeaderLayout history={history}/>
         <Container>
           <div
             style={{

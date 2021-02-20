@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  Grid,
-  Typography,
-  Card,
-  CardContent,
-  makeStyles,
-  Button,
-} from '@material-ui/core';
-import { Adjust as AdjustIcon } from '@material-ui/icons/';
+import {Button, Card, CardContent, Grid, makeStyles, Typography,} from '@material-ui/core';
+import {Adjust as AdjustIcon} from '@material-ui/icons/';
 import './OrderSummary.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,22 +32,22 @@ const useStyles = makeStyles((theme) => ({
 const OrderSummary = (props) => {
   let {
     selectedItems,
-    restaurant: { name, totalAmount },
+    restaurant: {name, totalAmount},
     onOrderClickHandler,
   } = props;
   const classes = useStyles();
 
- const  isPlaceOrderDisabled=() =>  props.selectedPaymentOption==='' || props.selectedAddress ==='';
-    
+  const isPlaceOrderDisabled = () => props.selectedPaymentOption === '' || props.selectedAddress === '';
+
 
   return (
     <>
       <Card className={classes.ordersummary}>
         <CardContent>
           <Typography variant="h3">Summary</Typography>
-          <br />
+          <br/>
           <Typography variant="h3">{name}</Typography>
-          <br />
+          <br/>
           <Grid container>
             {[...selectedItems].map((item, index) => {
               return (
@@ -64,8 +57,8 @@ const OrderSummary = (props) => {
                       className="adjusticon"
                       style={
                         item[1].item_type === 'VEG'
-                          ? { color: 'green' }
-                          : { color: 'crimson' }
+                          ? {color: 'green'}
+                          : {color: 'crimson'}
                       }
                     />
                     <Typography
@@ -90,11 +83,11 @@ const OrderSummary = (props) => {
                       {item[1].price}
                     </Typography>
                   </Grid>
-                  <br />
-                  <br />
+                  <br/>
+                  <br/>
                   {parseInt(index + 1) === selectedItems.size && (
                     <>
-                      <hr className={classes.fullwidth} />
+                      <hr className={classes.fullwidth}/>
                       <Grid item xs={12} className={classes.spaceAround}>
                         <Typography variant="body1">Net Amount</Typography>
                         <Typography variant="subtitle2">

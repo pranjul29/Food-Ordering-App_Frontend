@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
-import {
-  GridListTile,
-  Tabs,
-  Tab,
-  AppBar,
-  GridList,
-  withStyles,
-} from '@material-ui/core';
-import { getAllAddress } from '../../api';
+import React, {Component} from 'react';
+import {AppBar, GridList, GridListTile, Tab, Tabs, withStyles,} from '@material-ui/core';
+import {getAllAddress} from '../../api';
 import AddressCard from '../AddressCard/AddressCard';
 import NewAddress from "../NewAddress/NewAddress";
+
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -57,7 +51,7 @@ class AddressTabs extends Component {
   }
 
   loadAllAddress = async () => {
-    let { data } = await getAllAddress();
+    let {data} = await getAllAddress();
     console.log('the result is...', data);
     if (data && data.addresses) {
       this.setState({
@@ -72,7 +66,7 @@ class AddressTabs extends Component {
     });
   };
   renderAddressCards = () => {
-    let { classes, onClick, addressSelected } = this.props;
+    let {classes, onClick, addressSelected} = this.props;
     console.log(addressSelected, 'addresselected...');
     return (
       <div className={classes.root}>
@@ -98,8 +92,9 @@ class AddressTabs extends Component {
       </div>
     );
   };
+
   render() {
-    let { value } = this.state;
+    let {value} = this.state;
 
     return (
       <>

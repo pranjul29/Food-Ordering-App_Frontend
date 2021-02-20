@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
-  let { history, showSearch } = props;
+  let {history, showSearch} = props;
   let isLoggedIn = props.isUserLoggedIn;
 
   return (
@@ -100,13 +100,13 @@ export default function Header(props) {
               history.push('/');
             }}
           >
-            <FastfoodIcon />
+            <FastfoodIcon/>
           </IconButton>
 
           {showSearch ? (
             <div className={classes.search}>
               <div className={classes.searchIcon}>
-                <SearchIcon />
+                <SearchIcon/>
               </div>
               <Input
                 placeholder="Search by Restaurant Name"
@@ -114,18 +114,18 @@ export default function Header(props) {
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
-                inputProps={{ 'aria-label': 'search' }}
+                inputProps={{'aria-label': 'search'}}
                 onChange={props.onChangeHandler}
               />
             </div>
           ) : null}
           {isLoggedIn ? (
-            <ProfileDropdown history={history} userLogout={props.userLogout} />
+            <ProfileDropdown history={history} userLogout={props.userLogout}/>
           ) : (
             <Button
               variant="contained"
               className={classes.button}
-              startIcon={<AccountCircleIcon />}
+              startIcon={<AccountCircleIcon/>}
               onClick={props.onLoginClickHandler}
             >
               Login

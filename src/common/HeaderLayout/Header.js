@@ -1,22 +1,20 @@
-import React, { Component } from 'react';
-import { Header, MessageSnackbar } from '../../components';
-import { login, registration } from '../../api';
-import { isValidContact, isValidPassword } from '../utils';
-import { userLogout } from '../utils';
-import { withRouter } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Header, MessageSnackbar} from '../../components';
+import {login, registration} from '../../api';
+import {isUserLoggedIn as userLoogedIn, isValidContact, isValidPassword, userLogout} from '../utils';
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as EmailValidator from 'email-validator';
-import { isUserLoggedIn as userLoogedIn } from '../utils';
 import {
-  withStyles,
-  Tabs,
-  Tab,
-  Typography,
-  FormControl,
-  InputLabel,
-  Input,
-  FormHelperText,
   Button,
+  FormControl,
+  FormHelperText,
+  Input,
+  InputLabel,
+  Tab,
+  Tabs,
+  Typography,
+  withStyles,
 } from '@material-ui/core';
 import Modal from 'react-modal';
 import './Header.css';
@@ -35,14 +33,14 @@ const customStyles = {
 
 const useStyles = (theme) => ({
   root: {
-    marginTop: '2rem',  
-    },
-  
+    marginTop: '2rem',
+  },
+
 });
 
 const TabContainer = function (props) {
   return (
-    <Typography component="div" style={{ padding: 0, textAlign: 'center' }}>
+    <Typography component="div" style={{padding: 0, textAlign: 'center'}}>
       {props.children}
     </Typography>
   );
@@ -93,8 +91,9 @@ class HeaderLayout extends Component {
       isUserLoggedIn: userLoogedIn(),
     });
   }
+
   closeModalHandler = () => {
-    this.setState({ modalIsOpen: false });
+    this.setState({modalIsOpen: false});
   };
 
   openModalHandler = () => {
@@ -137,17 +136,17 @@ class HeaderLayout extends Component {
   };
 
   tabChangeHandler = (event, value) => {
-    this.setState({ value });
+    this.setState({value});
   };
 
   loginClickHandler = async () => {
-    let { contact_number, loginPassword } = this.state;
+    let {contact_number, loginPassword} = this.state;
     contact_number === ''
-      ? this.setState({ contact_numberRequired: 'dispBlock' })
-      : this.setState({ contact_numberRequired: 'dispNone' });
+      ? this.setState({contact_numberRequired: 'dispBlock'})
+      : this.setState({contact_numberRequired: 'dispNone'});
     loginPassword === ''
-      ? this.setState({ loginPasswordRequired: 'dispBlock' })
-      : this.setState({ loginPasswordRequired: 'dispNone' });
+      ? this.setState({loginPasswordRequired: 'dispBlock'})
+      : this.setState({loginPasswordRequired: 'dispNone'});
 
     if (contact_number !== '' && !contact_number.match(/^\d{10}$/g)) {
       this.setState({
@@ -172,7 +171,7 @@ class HeaderLayout extends Component {
     if (isValidContact(contact_number) && loginPassword) {
       let result = await login(payload);
       if (result.isAxiosError) {
-        let { message } = result.response.data;
+        let {message} = result.response.data;
         this.setState({
           loginApiErrors: {
             status: true,
@@ -196,32 +195,32 @@ class HeaderLayout extends Component {
   };
 
   contactNumberChangeHandler = (e) => {
-    this.setState({ contact_number: e.target.value });
+    this.setState({contact_number: e.target.value});
   };
 
   inputLoginPasswordChangeHandler = (e) => {
-    this.setState({ loginPassword: e.target.value });
+    this.setState({loginPassword: e.target.value});
   };
 
   registerClickHandler = () => {
-    let { contact, firstname, lastname, email, registerPassword } = this.state;
+    let {contact, firstname, lastname, email, registerPassword} = this.state;
     let isErrors = false,
       errors = {};
     firstname === ''
-      ? this.setState({ firstnameRequired: 'dispBlock' })
-      : this.setState({ firstnameRequired: 'dispNone' });
+      ? this.setState({firstnameRequired: 'dispBlock'})
+      : this.setState({firstnameRequired: 'dispNone'});
     lastname === ''
-      ? this.setState({ lastnameRequired: 'dispBlock' })
-      : this.setState({ lastnameRequired: 'dispNone' });
+      ? this.setState({lastnameRequired: 'dispBlock'})
+      : this.setState({lastnameRequired: 'dispNone'});
     email === ''
-      ? this.setState({ emailRequired: 'dispBlock' })
-      : this.setState({ emailRequired: 'dispNone' });
+      ? this.setState({emailRequired: 'dispBlock'})
+      : this.setState({emailRequired: 'dispNone'});
     registerPassword === ''
-      ? this.setState({ registerPasswordRequired: 'dispBlock' })
-      : this.setState({ registerPasswordRequired: 'dispNone' });
+      ? this.setState({registerPasswordRequired: 'dispBlock'})
+      : this.setState({registerPasswordRequired: 'dispNone'});
     contact === ''
-      ? this.setState({ contactRequired: 'dispBlock' })
-      : this.setState({ contactRequired: 'dispNone' });
+      ? this.setState({contactRequired: 'dispBlock'})
+      : this.setState({contactRequired: 'dispNone'});
 
     if (
       firstname === '' ||
@@ -295,23 +294,23 @@ class HeaderLayout extends Component {
     }
   };
   inputFirstNameChangeHandler = (e) => {
-    this.setState({ firstname: e.target.value });
+    this.setState({firstname: e.target.value});
   };
 
   inputLastNameChangeHandler = (e) => {
-    this.setState({ lastname: e.target.value });
+    this.setState({lastname: e.target.value});
   };
 
   inputEmailChangeHandler = (e) => {
-    this.setState({ email: e.target.value });
+    this.setState({email: e.target.value});
   };
 
   inputRegisterPasswordChangeHandler = (e) => {
-    this.setState({ registerPassword: e.target.value });
+    this.setState({registerPassword: e.target.value});
   };
 
   inputContactChangeHandler = (e) => {
-    this.setState({ contact: e.target.value });
+    this.setState({contact: e.target.value});
   };
 
   userLogout = () => {
@@ -322,11 +321,11 @@ class HeaderLayout extends Component {
   };
 
   onClose = () => {
-    this.setState({ openSnackbar: false }); // close the snackbar
+    this.setState({openSnackbar: false}); // close the snackbar
   };
 
   render() {
-    const { classes, history, showSearch } = this.props;
+    const {classes, history, showSearch} = this.props;
     const {
       loginApiErrors,
       isUserLoggedIn,
@@ -358,8 +357,8 @@ class HeaderLayout extends Component {
             value={this.state.value}
             onChange={this.tabChangeHandler}
           >
-            <Tab label="Login" />
-            <Tab label="Register" />
+            <Tab label="Login"/>
+            <Tab label="Register"/>
           </Tabs>
 
           {this.state.value === 0 && (
@@ -378,14 +377,14 @@ class HeaderLayout extends Component {
                 {loginApiErrors.status && (
                   <FormHelperText className="errorMessage">
                     <span className="red">
-                      <br />
+                      <br/>
                       {loginApiErrors.errors.contactError}
                     </span>
                   </FormHelperText>
                 )}
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <FormControl required>
                 <InputLabel htmlFor="loginPassword">Password</InputLabel>
                 <Input
@@ -399,22 +398,22 @@ class HeaderLayout extends Component {
                 </FormHelperText>
                 {loginApiErrors.status && (
                   <FormHelperText className="errorMessage">
-                    <br />
+                    <br/>
                     <span className="red">
                       {loginApiErrors.errors.loginError}
                     </span>
                   </FormHelperText>
                 )}
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               {this.state.isUserLoggedIn === true && (
                 <FormControl>
                   <span className="successText">Login Successful!</span>
                 </FormControl>
               )}
-              <br />
-              <br />
+              <br/>
+              <br/>
               <Button
                 variant="contained"
                 color="primary"
@@ -439,8 +438,8 @@ class HeaderLayout extends Component {
                   <span className="red">required</span>
                 </FormHelperText>
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <FormControl required>
                 <InputLabel htmlFor="lastname">Last Name</InputLabel>
                 <Input
@@ -453,8 +452,8 @@ class HeaderLayout extends Component {
                   <span className="red">required</span>
                 </FormHelperText>
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <FormControl required>
                 <InputLabel htmlFor="email">Email</InputLabel>
                 <Input
@@ -474,8 +473,8 @@ class HeaderLayout extends Component {
                   </FormHelperText>
                 )}
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <FormControl required>
                 <InputLabel htmlFor="registerPassword">Password</InputLabel>
                 <Input
@@ -495,8 +494,8 @@ class HeaderLayout extends Component {
                   </FormHelperText>
                 )}
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <FormControl required>
                 <InputLabel htmlFor="contact">Contact No.</InputLabel>
                 <Input
@@ -516,8 +515,8 @@ class HeaderLayout extends Component {
                   </FormHelperText>
                 )}
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               {registrationErrors.status && (
                 <FormHelperText className="errorMessage">
                   <span className="red">
@@ -557,7 +556,8 @@ class HeaderLayout extends Component {
 export default withStyles(useStyles)(withRouter(HeaderLayout));
 
 HeaderLayout.defaultProps = {
-  onChangeHandler: () => {},
+  onChangeHandler: () => {
+  },
 };
 
 HeaderLayout.propTypes = {

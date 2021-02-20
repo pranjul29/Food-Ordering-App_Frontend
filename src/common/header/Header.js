@@ -1,5 +1,5 @@
 import "./Header.css";
-import React, { Component } from "react";
+import React, {Component} from "react";
 import Button from "@material-ui/core/Button";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -18,7 +18,7 @@ import validator from "validator";
 import Snackbar from "@material-ui/core/Snackbar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const customModalStyle = {
   content: {
@@ -87,76 +87,76 @@ class Header extends Component {
   };
 
   openModalHandler = () => {
-    this.setState({ modalIsOpen: true });
+    this.setState({modalIsOpen: true});
   };
 
   closeSnackbarHandler = (e) => {
-    this.setState({ loginSnackbarIsOpen: false });
+    this.setState({loginSnackbarIsOpen: false});
   };
 
   closeSignupSnackbarHandler = (e) => {
-    this.setState({ signupSnackbarIsOpen: false });
+    this.setState({signupSnackbarIsOpen: false});
   };
 
   openMenuHandler = (e) => {
-    this.setState({ anchorEl: e.currentTarget });
+    this.setState({anchorEl: e.currentTarget});
   };
 
   closeMenuHandler = () => {
-    this.setState({ anchorEl: null });
+    this.setState({anchorEl: null});
   };
 
   closeModalHandler = () => {
-    this.setState({ modalIsOpen: false });
-    this.setState({ contactNumber: "" });
-    this.setState({ contactNoRequired: "dispNone" });
-    this.setState({ invalidContactNo: "dispNone" });
-    this.setState({ password: "" });
-    this.setState({ passwordRequired: "dispNone" });
-    this.setState({ unregisteredContactNo: "dispNone" });
-    this.setState({ invalidCredentials: "dispNone" });
-    this.setState({ firstName: "" });
-    this.setState({ firstNameRequired: "dispNone" });
-    this.setState({ lastName: "" });
-    this.setState({ email: "" });
-    this.setState({ emailRequired: "dispNone" });
-    this.setState({ inValidEmail: "dispNone" });
-    this.setState({ signupPassword: "" });
-    this.setState({ signupPasswordRequired: "dispNone" });
-    this.setState({ weakPassword: "dispNone" });
-    this.setState({ signupcontactNo: "" });
-    this.setState({ signupcontactNoRequired: "dispNone" });
-    this.setState({ inValidsignupcontactNo: "dispNone" });
-    this.setState({ registeredContactNo: "dispNone" });
+    this.setState({modalIsOpen: false});
+    this.setState({contactNumber: ""});
+    this.setState({contactNoRequired: "dispNone"});
+    this.setState({invalidContactNo: "dispNone"});
+    this.setState({password: ""});
+    this.setState({passwordRequired: "dispNone"});
+    this.setState({unregisteredContactNo: "dispNone"});
+    this.setState({invalidCredentials: "dispNone"});
+    this.setState({firstName: ""});
+    this.setState({firstNameRequired: "dispNone"});
+    this.setState({lastName: ""});
+    this.setState({email: ""});
+    this.setState({emailRequired: "dispNone"});
+    this.setState({inValidEmail: "dispNone"});
+    this.setState({signupPassword: ""});
+    this.setState({signupPasswordRequired: "dispNone"});
+    this.setState({weakPassword: "dispNone"});
+    this.setState({signupcontactNo: ""});
+    this.setState({signupcontactNoRequired: "dispNone"});
+    this.setState({inValidsignupcontactNo: "dispNone"});
+    this.setState({registeredContactNo: "dispNone"});
   };
 
   tabChangeHandler = (e, value) => {
-    this.setState({ value });
+    this.setState({value});
   };
 
   contactNumberChangeHandler = (e) => {
-    this.setState({ contactNumber: e.target.value });
+    this.setState({contactNumber: e.target.value});
   };
 
   passwordChangeHandler = (e) => {
-    this.setState({ password: e.target.value });
+    this.setState({password: e.target.value});
   };
 
   loginClickHandler = (e) => {
-    this.setState({ unregisteredContactNo: "dispNone" });
-    this.setState({ invalidCredentials: "dispNone" });
+    this.setState({unregisteredContactNo: "dispNone"});
+    this.setState({invalidCredentials: "dispNone"});
     this.state.contactNumber === ""
-      ? this.setState({ contactNoRequired: "dispBlock" })
-      : this.setState({ contactNoRequired: "dispNone" });
+      ? this.setState({contactNoRequired: "dispBlock"})
+      : this.setState({contactNoRequired: "dispNone"});
     this.state.password === ""
-      ? this.setState({ passwordRequired: "dispBlock" })
-      : this.setState({ passwordRequired: "dispNone" });
+      ? this.setState({passwordRequired: "dispBlock"})
+      : this.setState({passwordRequired: "dispNone"});
     //contact nmumber validation
     if (this.state.contactNumber.length > 0) {
       validator.isNumeric(this.state.contactNumber) &&
       this.state.contactNumber.length === 10
-        ? this.setState({ invalidContactNo: "dispNone" })
-        : this.setState({ invalidContactNo: "dispBlock" });
+        ? this.setState({invalidContactNo: "dispNone"})
+        : this.setState({invalidContactNo: "dispBlock"});
     }
 
     //xmlhttprequest for login
@@ -165,7 +165,7 @@ class Header extends Component {
         let data = null;
         let xhr = new XMLHttpRequest();
         let that = this;
-        xhr.addEventListener("readystatechange", function() {
+        xhr.addEventListener("readystatechange", function () {
           if (this.readyState === 4 && this.status === 200) {
             //getting and storing access-token in session-storage
             sessionStorage.setItem(
@@ -174,19 +174,19 @@ class Header extends Component {
             );
             // getting user details
             let response = JSON.parse(this.responseText);
-            that.setState({ user: response });
-            that.setState({ loginSnackbarIsOpen: true });
+            that.setState({user: response});
+            that.setState({loginSnackbarIsOpen: true});
             that.closeModalHandler();
-            that.setState({ userLoggedIn: true });
+            that.setState({userLoggedIn: true});
           } else if (this.readyState === 4) {
             let response = JSON.parse(this.responseText);
             if (that.state.invalidContactNo === "dispNone") {
               if (response.code === "ATH-001") {
                 console.log(JSON.parse(this.responseText));
-                that.setState({ unregisteredContactNo: "dispBlock" });
+                that.setState({unregisteredContactNo: "dispBlock"});
               } else {
                 console.log(JSON.parse(this.responseText));
-                that.setState({ invalidCredentials: "dispBlock" });
+                that.setState({invalidCredentials: "dispBlock"});
               }
             }
           }
@@ -206,48 +206,48 @@ class Header extends Component {
   };
 
   firstNameChangeHandler = (e) => {
-    this.setState({ firstName: e.target.value });
+    this.setState({firstName: e.target.value});
   };
 
   lastNameChangeHandler = (e) => {
-    this.setState({ lastName: e.target.value });
+    this.setState({lastName: e.target.value});
   };
 
   emailChangeHandler = (e) => {
-    this.setState({ email: e.target.value });
+    this.setState({email: e.target.value});
   };
 
   signupPasswordChangeHandler = (e) => {
-    this.setState({ signupPassword: e.target.value });
+    this.setState({signupPassword: e.target.value});
   };
 
   signupcontactNoChangeHandler = (e) => {
-    this.setState({ signupcontactNo: e.target.value });
+    this.setState({signupcontactNo: e.target.value});
   };
 
   signupClickHandler = (e) => {
-    this.setState({ registeredContactNo: "dispNone" });
-    this.setState({ inValidEmail: "dispNone" });
-    this.setState({ inValidsignupcontactNo: "dispNone" });
-    this.setState({weakPassword : "dispNone"})
+    this.setState({registeredContactNo: "dispNone"});
+    this.setState({inValidEmail: "dispNone"});
+    this.setState({inValidsignupcontactNo: "dispNone"});
+    this.setState({weakPassword: "dispNone"})
     //input validation
     this.state.firstName.trim() === ""
-      ? this.setState({ firstNameRequired: "dispBlock" })
-      : this.setState({ firstNameRequired: "dispNone" });
+      ? this.setState({firstNameRequired: "dispBlock"})
+      : this.setState({firstNameRequired: "dispNone"});
     this.state.email === ""
-      ? this.setState({ emailRequired: "dispBlock" })
-      : this.setState({ emailRequired: "dispNone" });
+      ? this.setState({emailRequired: "dispBlock"})
+      : this.setState({emailRequired: "dispNone"});
     this.state.signupPassword === ""
-      ? this.setState({ signupPasswordRequired: "dispBlock" })
-      : this.setState({ signupPasswordRequired: "dispNone" });
+      ? this.setState({signupPasswordRequired: "dispBlock"})
+      : this.setState({signupPasswordRequired: "dispNone"});
     this.state.signupcontactNo === ""
-      ? this.setState({ signupcontactNoRequired: "dispBlock" })
-      : this.setState({ signupcontactNoRequired: "dispNone" });
+      ? this.setState({signupcontactNoRequired: "dispBlock"})
+      : this.setState({signupcontactNoRequired: "dispNone"});
     //email validation
     if (this.state.email.length > 0) {
       validator.isEmail(this.state.email)
-        ? this.setState({ inValidEmail: "dispNone" })
-        : this.setState({ inValidEmail: "dispBlock" });
+        ? this.setState({inValidEmail: "dispNone"})
+        : this.setState({inValidEmail: "dispBlock"});
     }
     //password validation
     if (this.state.signupPassword.length > 0) {
@@ -265,15 +265,15 @@ class Header extends Component {
       else if (!/\d/.test(this.state.signupPassword)) weakPassword = true;
 
       weakPassword
-        ? this.setState({ weakPassword: "dispBlock" })
-        : this.setState({ weakPassword: "dispNone" });
+        ? this.setState({weakPassword: "dispBlock"})
+        : this.setState({weakPassword: "dispNone"});
     }
     //contact number validation
     if (this.state.signupcontactNo.length > 0) {
       validator.isNumeric(this.state.signupcontactNo) &&
       this.state.signupcontactNo.length === 10
-        ? this.setState({ inValidsignupcontactNo: "dispNone" })
-        : this.setState({ inValidsignupcontactNo: "dispBlock" });
+        ? this.setState({inValidsignupcontactNo: "dispNone"})
+        : this.setState({inValidsignupcontactNo: "dispBlock"});
     }
 
     //xmlhttprequest for signup
@@ -293,15 +293,15 @@ class Header extends Component {
         });
         let xhr = new XMLHttpRequest();
         let that = this;
-        xhr.addEventListener("readystatechange", function() {
+        xhr.addEventListener("readystatechange", function () {
           if (this.readyState === 4 && this.status === 201) {
-            that.setState({ value: 0 });
-            that.setState({ signupSnackbarIsOpen: true });
+            that.setState({value: 0});
+            that.setState({signupSnackbarIsOpen: true});
           } else if (this.readyState === 4) {
             let response = JSON.parse(this.responseText);
             if (response.code === "SGR-001") {
               console.log(JSON.parse(this.responseText));
-              that.setState({ registeredContactNo: "dispBlock" });
+              that.setState({registeredContactNo: "dispBlock"});
             } else {
               console.log(JSON.parse(this.responseText));
             }
@@ -324,10 +324,10 @@ class Header extends Component {
     let xhr = new XMLHttpRequest();
     let that = this;
     let accessToken = sessionStorage.getItem("access-token");
-    xhr.addEventListener("readystatechange", function() {
+    xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4 && this.status === 200) {
         // getting user details
-        that.setState({ userLoggedIn: false });
+        that.setState({userLoggedIn: false});
         sessionStorage.removeItem("access-token");
       }
     });
@@ -343,7 +343,7 @@ class Header extends Component {
         <header>
           <div className="header">
             <div className="logo">
-              <FastfoodIcon fontSize="large" />
+              <FastfoodIcon fontSize="large"/>
             </div>
             <div className="search-bar">
               <Input
@@ -353,7 +353,7 @@ class Header extends Component {
                 onChange={this.searchBarTextChangeHandler}
                 startAdornment={
                   <InputAdornment>
-                    <SearchIcon />
+                    <SearchIcon/>
                   </InputAdornment>
                 }
               />
@@ -364,7 +364,7 @@ class Header extends Component {
                   <Button
                     variant="contained"
                     color="default"
-                    startIcon={<AccountCircle />}
+                    startIcon={<AccountCircle/>}
                     onClick={this.openMenuHandler}
                   >
                     {this.state.user.first_name}
@@ -374,7 +374,7 @@ class Header extends Component {
                 <Button
                   variant="contained"
                   color="default"
-                  startIcon={<AccountCircle />}
+                  startIcon={<AccountCircle/>}
                   onClick={this.openModalHandler}
                 >
                   LOGIN
@@ -384,8 +384,8 @@ class Header extends Component {
                 id="profileMenu"
                 anchorEl={this.state.anchorEl}
                 getContentAnchorEl={null}
-                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                transformOrigin={{ vertical: "top", horizontal: "center" }}
+                anchorOrigin={{vertical: "bottom", horizontal: "center"}}
+                transformOrigin={{vertical: "top", horizontal: "center"}}
                 keepMounted
                 open={Boolean(this.state.anchorEl)}
                 onClose={this.closeMenuHandler}
@@ -414,8 +414,8 @@ class Header extends Component {
             value={this.state.value}
             onChange={this.tabChangeHandler}
           >
-            <Tab label="LOGIN" />
-            <Tab label="SIGNUP" />
+            <Tab label="LOGIN"/>
+            <Tab label="SIGNUP"/>
           </Tabs>
           {this.state.value === 0 && (
             <TabContainer>
@@ -434,8 +434,8 @@ class Header extends Component {
                   <span className="red">Invalid Contact</span>
                 </FormHelperText>
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <FormControl required>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
@@ -447,7 +447,7 @@ class Header extends Component {
                 <FormHelperText className={this.state.passwordRequired}>
                   <span className="red">required</span>
                 </FormHelperText>
-                <br />
+                <br/>
                 <FormHelperText className={this.state.unregisteredContactNo}>
                   <span className="red">
                     This contact number has not been registered!
@@ -457,8 +457,8 @@ class Header extends Component {
                   <span className="red">Invalid Credentials</span>
                 </FormHelperText>
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <Button
                 variant="contained"
                 color="primary"
@@ -482,8 +482,8 @@ class Header extends Component {
                   <span className="red">required</span>
                 </FormHelperText>
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <FormControl>
                 <InputLabel>Last Name</InputLabel>
                 <Input
@@ -493,8 +493,8 @@ class Header extends Component {
                   onChange={this.lastNameChangeHandler}
                 />
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <FormControl required>
                 <InputLabel>Email</InputLabel>
                 <Input
@@ -510,8 +510,8 @@ class Header extends Component {
                   <span className="red">Invalid Email</span>
                 </FormHelperText>
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <FormControl required>
                 <InputLabel htmlFor="signupPassword">Password</InputLabel>
                 <Input
@@ -530,8 +530,8 @@ class Header extends Component {
                   </span>
                 </FormHelperText>
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <FormControl required>
                 <InputLabel>Contact No.</InputLabel>
                 <Input
@@ -549,7 +549,7 @@ class Header extends Component {
                     long
                   </span>
                 </FormHelperText>
-                <br />
+                <br/>
                 <FormHelperText className={this.state.registeredContactNo}>
                   <span className="red">
                     This contact number is already registered! Try other contact
@@ -557,8 +557,8 @@ class Header extends Component {
                   </span>
                 </FormHelperText>
               </FormControl>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <Button
                 variant="contained"
                 color="primary"

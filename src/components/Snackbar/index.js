@@ -28,7 +28,7 @@ export default function MessageSnackbar(props) {
               color="inherit"
               onClick={handleClose}
             >
-              <CloseIcon fontSize="small" />
+              <CloseIcon fontSize="small"/>
             </IconButton>
           </React.Fragment>
         }

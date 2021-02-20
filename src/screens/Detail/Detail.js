@@ -1,33 +1,32 @@
-import React, { Component } from 'react';
-import { getRestaurantById } from '../../api';
+import React, {Component} from 'react';
+import {getRestaurantById} from '../../api';
 import RestaurantDetailsCard from '../../components/RestaurantDetailsCard';
 import HeaderLayout from '../../common/HeaderLayout/Header';
 import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
   Container,
   Grid,
-  Typography,
-  CircularProgress,
-  Card,
-  Button,
-  CardContent,
   IconButton,
-  Badge,
+  Typography,
   withStyles,
 } from '@material-ui/core';
 import './Detail.css';
-import { v4 as uuidv4 } from 'uuid';
-import { withRouter } from 'react-router-dom';
-import { addSelectedItems, addRestaurantDetail } from '../../common/utils';
+import {v4 as uuidv4} from 'uuid';
+import {withRouter} from 'react-router-dom';
+import {addRestaurantDetail, addSelectedItems, isUserLoggedIn} from '../../common/utils';
 import {
+  Add as AddIcon,
   Adjust as AdjustIcon,
+  FiberManualRecord,
   Remove as RemoveIcon,
   ShoppingCart as ShoppingCartIcon,
-  Add as AddIcon,
-  FiberManualRecord,
 } from '@material-ui/icons/';
-import { MessageSnackbar } from '../../components';
+import {MessageSnackbar} from '../../components';
 import joinClassNames from 'classnames';
-import { isUserLoggedIn } from '../../common/utils';
 
 const useStyles = (theme) => ({
   qty: {
@@ -77,7 +76,7 @@ class Detail extends Component {
   }
 
   componentDidMount() {
-    let { id } = this.props.match.params;
+    let {id} = this.props.match.params;
     this.loadRestaurantDetails(id);
   }
 
@@ -86,7 +85,7 @@ class Detail extends Component {
     this.setState({
       isLoading: true,
     });
-    let { data } = await getRestaurantById(id);
+    let {data} = await getRestaurantById(id);
     this.setState({
       restaurant: data,
       isLoading: false,
@@ -100,9 +99,9 @@ class Detail extends Component {
     // if the value exists in the map , update the qty
     // and price of the item to the totalAmount
 
-    let { selectedItems, qtyCount, totalAmount } = this.state;
+    let {selectedItems, qtyCount, totalAmount} = this.state;
     qtyCount = qtyCount + 1;
-    let selectedItem = { ...item };
+    let selectedItem = {...item};
     if (selectedItems.has(item.id)) {
       selectedItem = selectedItems.get(item.id);
       selectedItem.qty += 1;
@@ -129,9 +128,9 @@ class Detail extends Component {
     // if it exits then assign to selectedItem , decrement the qty
     // if the qty is 1 then delete from the map and update the setState with the latest map
 
-    let { selectedItems, qtyCount, totalAmount } = this.state;
+    let {selectedItems, qtyCount, totalAmount} = this.state;
     qtyCount = qtyCount - 1; // total count decrement value by 1
-    let selectedItem = { ...item };
+    let selectedItem = {...item};
     if (selectedItems.has(item.id)) {
       selectedItem = selectedItems.get(item.id);
     }
@@ -150,12 +149,12 @@ class Detail extends Component {
   };
 
   onClose = () => {
-    this.setState({ openSnackbar: false }); // close the snackbar
+    this.setState({openSnackbar: false}); // close the snackbar
   };
 
   onCheckout = (e) => {
     //e.preventDefault();
-    let { qtyCount, totalAmount, restaurant } = this.state;
+    let {qtyCount, totalAmount, restaurant} = this.state;
     // first condition to show the error message
     if (qtyCount === 0) {
       this.setState({
@@ -190,7 +189,7 @@ class Detail extends Component {
 
   render() {
     let {
-      restaurant: { categories },
+      restaurant: {categories},
       isLoading,
       qtyCount,
       selectedItems,
@@ -202,10 +201,10 @@ class Detail extends Component {
       restaurant,
       openSnackbar,
     } = this.state; // destruct all the variables from state that are used in JSX
-    let { classes } = this.props;
+    let {classes} = this.props;
     return (
       <div>
-        <HeaderLayout />
+        <HeaderLayout/>
         {!isLoading && (
           <RestaurantDetailsCard
             restaurant={restaurant}
@@ -219,57 +218,57 @@ class Detail extends Component {
               marginTop: '2rem',
             }}
           >
-            <CircularProgress />
+            <CircularProgress/>
           </div>
         ) : (
           <Container className={classes.mt15}>
             <Grid container>
               <Grid item xs={12} md={6}>
                 {categories &&
-                  categories.map((item) => {
-                    return (
-                      <div key={item.id}>
-                        <Typography variant="subtitle1">
-                          {item.category_name.toUpperCase()}
-                        </Typography>
-                        <hr />
-                        {item.item_list.map((item_list) => {
-                          return (
-                            <div className="item__list" key={item_list.id}>
-                              <div className="item__category">
-                                <FiberManualRecord
-                                  className="circle"
-                                  style={
-                                    item_list.item_type === 'VEG'
-                                      ? { color: 'green' }
-                                      : { color: 'crimson' }
-                                  }
-                                />
-                                <Typography
-                                  component="span"
-                                  variant="subtitle2"
-                                >
-                                  {item_list.item_name}
-                                </Typography>
-                              </div>
-                              <div className="item__price">
-                                <Typography
-                                  component="span"
-                                  variant="subtitle2"
-                                >
-                                  <b>₹</b> {item_list.price}
-                                </Typography>
-                                <AddIcon
-                                  className="plusicon"
-                                  onClick={this.addItem.bind(this, item_list)}
-                                />
-                              </div>
+                categories.map((item) => {
+                  return (
+                    <div key={item.id}>
+                      <Typography variant="subtitle1">
+                        {item.category_name.toUpperCase()}
+                      </Typography>
+                      <hr/>
+                      {item.item_list.map((item_list) => {
+                        return (
+                          <div className="item__list" key={item_list.id}>
+                            <div className="item__category">
+                              <FiberManualRecord
+                                className="circle"
+                                style={
+                                  item_list.item_type === 'VEG'
+                                    ? {color: 'green'}
+                                    : {color: 'crimson'}
+                                }
+                              />
+                              <Typography
+                                component="span"
+                                variant="subtitle2"
+                              >
+                                {item_list.item_name}
+                              </Typography>
                             </div>
-                          );
-                        })}
-                      </div>
-                    );
-                  })}
+                            <div className="item__price">
+                              <Typography
+                                component="span"
+                                variant="subtitle2"
+                              >
+                                <b>₹</b> {item_list.price}
+                              </Typography>
+                              <AddIcon
+                                className="plusicon"
+                                onClick={this.addItem.bind(this, item_list)}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
               </Grid>
               <Grid item md={1}></Grid>
               <Grid item md={4} xs={12}>
@@ -284,10 +283,10 @@ class Detail extends Component {
                         color="primary"
                         className={classes.badgeIndex}
                       >
-                        <ShoppingCartIcon />
+                        <ShoppingCartIcon/>
                       </Badge>
                     </IconButton>
-                    <br />
+                    <br/>
                     <Grid container>
                       {[...selectedItems].map((item) => {
                         return (
@@ -297,8 +296,8 @@ class Detail extends Component {
                                 className="adjusticon"
                                 style={
                                   item[1].item_type === 'VEG'
-                                    ? { color: 'green' }
-                                    : { color: 'crimson' }
+                                    ? {color: 'green'}
+                                    : {color: 'crimson'}
                                 }
                               />
                               <Typography
@@ -330,8 +329,8 @@ class Detail extends Component {
                                 {item[1].price}
                               </Typography>
                             </Grid>
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
                           </React.Fragment>
                         );
                       })}

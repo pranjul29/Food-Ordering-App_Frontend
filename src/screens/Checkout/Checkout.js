@@ -1,21 +1,18 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import { StepContent, Grid } from '@material-ui/core';
+import {Grid, StepContent} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import {
-  AddressLayout,
-  PaymentOptions,
-  OrderSummary,
-} from './../../components';
-import { getSelectedItems, getRestaurantInfo } from './../../common/utils';
+import {AddressLayout, OrderSummary, PaymentOptions,} from './../../components';
+import {getRestaurantInfo, getSelectedItems} from './../../common/utils';
 import HeaderLayout from '../../common/HeaderLayout/Header';
-import { saveOrder } from './../../api';
-import { MessageSnackbar } from '../../components';
+import {saveOrder} from './../../api';
+import {MessageSnackbar} from '../../components';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -75,8 +72,8 @@ function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const [checkout, setCheckout] = React.useState({
-    selectedAddress: { id: '' },
-    selectedPaymentOption: { id: '', payment_name: '' },
+    selectedAddress: {id: ''},
+    selectedPaymentOption: {id: '', payment_name: ''},
     openSnackbar: false,
     orderItemSuccessful: false,
   }); // initial state
@@ -115,6 +112,8 @@ function Checkout() {
       restaurant_id: selectedRestaurnt.id,
     };
     let results = await saveOrder(JSON.stringify(payload));
+    console.log(results);
+    console.log(results.data);
     if (results.data) {
       setCheckout({
         ...checkout,
@@ -126,7 +125,7 @@ function Checkout() {
 
   return (
     <div className={classes.root}>
-      <HeaderLayout />
+      <HeaderLayout/>
       <Grid container>
         <Grid item xs={12} md={9}>
           <Stepper activeStep={activeStep} orientation="vertical">
@@ -161,8 +160,8 @@ function Checkout() {
         </Grid>
         <Grid item xs={12} md={3} className={classes.ordersummary__container}>
           <OrderSummary
-           selectedAddress={checkout.selectedAddress.id}
-           selectedPaymentOption= {checkout.selectedPaymentOption.id}
+            selectedAddress={checkout.selectedAddress.id}
+            selectedPaymentOption={checkout.selectedPaymentOption.id}
             selectedItems={selectedItems}
             restaurant={selectedRestaurnt}
             onOrderClickHandler={onOrderClickHandler}
@@ -182,7 +181,7 @@ function Checkout() {
           open={checkout.openSnackbar}
           message="Order placed successfully"
           onClose={() => {
-            setCheckout({ ...checkout, openSnackbar: false });
+            setCheckout({...checkout, openSnackbar: false});
           }}
         />
       )}

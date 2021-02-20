@@ -1,10 +1,10 @@
 import React from 'react';
-import { IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import { logout } from './../../api';
-import { Link } from 'react-router-dom';
+import {IconButton, Menu, MenuItem, Typography} from '@material-ui/core';
+import {fade, makeStyles} from '@material-ui/core/styles';
+import {logout} from './../../api';
+import {Link} from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { getUserName } from './../../common/utils';
+import {getUserName} from './../../common/utils';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
@@ -104,7 +104,7 @@ export default function ProfileDropdown(props) {
         onClick={handleMenu}
         color="inherit"
       >
-        <AccountCircleIcon aria-label="recipe" className={classes.avatar} />
+        <AccountCircleIcon aria-label="recipe" className={classes.avatar}/>
       </IconButton>
       <Typography variant="body1" component="span">
         {getUserName()}
@@ -125,11 +125,11 @@ export default function ProfileDropdown(props) {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <Link to="/profile" style={{ textDecoration: 'none' }}>
+          <Link to="/profile" style={{textDecoration: 'none'}}>
             My Profile
           </Link>
         </MenuItem>
-        <hr className={classes.drawLine} />
+        <hr className={classes.drawLine}/>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
@@ -137,8 +137,10 @@ export default function ProfileDropdown(props) {
 }
 
 ProfileDropdown.defaultProps = {
-  handleLogout: () => {},
-  handleClose: () => {},
+  handleLogout: () => {
+  },
+  handleClose: () => {
+  },
 };
 
 ProfileDropdown.propTypes = {

@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Routes from './screens/Controller';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
+
 const theme = createMuiTheme({
   typography: {
     subtitle1: {
@@ -21,7 +22,7 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <div>
     <ThemeProvider theme={theme}>
-      <Routes />
+      <Routes/>
     </ThemeProvider>
   </div>,
   document.getElementById('root')

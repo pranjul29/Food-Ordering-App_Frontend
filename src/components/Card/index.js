@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -57,7 +57,7 @@ export default function RestaurantCard(props) {
             variant="body2"
             color="textSecondary"
             component="p"
-            style={{ wordWrap: 'break-word' }}
+            style={{wordWrap: 'break-word'}}
           >
             {categories.split(' ').join(', ')}
           </Typography>
@@ -67,7 +67,7 @@ export default function RestaurantCard(props) {
         <Button
           variant="contained"
           className={classes.rating}
-          startIcon={<StarIcon />}
+          startIcon={<StarIcon/>}
         >
           {customer_rating}({number_customers_rated})
         </Button>
