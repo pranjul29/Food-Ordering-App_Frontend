@@ -316,6 +316,7 @@ class Checkout extends Component {
             if (xhrAddress.readyState === 4 && xhrAddress.status === 200) {
                 let responseAddresses = JSON.parse(xhrAddress.responseText).addresses;
                 let addresses = [];
+                if(responseAddresses!=null){
                 responseAddresses.forEach(responseAddress => {
                     let address = {
                         id: responseAddress.id,
@@ -327,7 +328,7 @@ class Checkout extends Component {
                         selected: false,
                     }
                     addresses.push(address)
-                })
+                })}
                 that.setState({
                     ...that.state,
                     addresses: addresses

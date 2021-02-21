@@ -67,15 +67,15 @@ class Header extends Component {
             isLoginRegisterModalOpen: false,
             isMenuOpen: false,
             value: 0,
-            loginContactNo: "",
-            loginContactNoRequired: "dispNone",
+            loginContactNumber: "",
+            loginContactNumberRequired: "dispNone",
             loginFormPassword: "",
-            loginPasswordRequired: "dispNone",
-            firstName: "",
-            firstNameRequired: "dispNone",
-            lastName: "",
+            loginFormPasswordRequired: "dispNone",
+            signupFormFirstName: "",
+            signupFormFirstNameRequired: "dispNone",
+            signupFormLastName: "",
             email: "",
-            emailRequired: "dispNone",
+            signupFormEmailRequired: "dispNone",
             invalidEmail: "dispNone",
             signUpPassword: "",
             signUpPasswordRequired: "dispNone",
@@ -112,15 +112,15 @@ class Header extends Component {
         this.setState({
             ...this.state,
             isLoginRegisterModalOpen: true,
-            loginContactNo: "",
-            loginContactNoRequired: "dispNone",
+            loginContactNumber: "",
+            loginContactNumberRequired: "dispNone",
             loginFormPassword: "",
-            loginPasswordRequired: "dispNone",
-            firstName: "",
-            firstNameRequired: "dispNone",
-            lastName: "",
+            loginFormPasswordRequired: "dispNone",
+            signupFormFirstName: "",
+            signupFormFirstNameRequired: "dispNone",
+            signupFormLastName: "",
             email: "",
-            emailRequired: "dispNone",
+            signupFormEmailRequired: "dispNone",
             invalidEmail: "dispNone",
             signUpPassword: "",
             signUpPasswordRequired: "dispNone",
@@ -151,7 +151,7 @@ class Header extends Component {
     loginContactNumberChangeHandler = (event) => {
         this.setState({
             ...this.state,
-            loginContactNo: event.target.value,
+            loginContactNumber: event.target.value,
         })
     }
 
@@ -165,14 +165,14 @@ class Header extends Component {
     firstNameChangeHandler = (event) => {
         this.setState({
             ...this.state,
-            firstName: event.target.value,
+            signupFormFirstName: event.target.value,
         })
     }
 
     lastNameChangeHandler = (event) => {
         this.setState({
             ...this.state,
-            lastName: event.target.value,
+            signupFormLastName: event.target.value,
         })
     }
 
@@ -270,7 +270,7 @@ class Header extends Component {
                 }
             })
             xhrLogin.open("POST", this.props.baseUrl + "customer/login");
-            xhrLogin.setRequestHeader("Authorization", "Basic " + window.btoa(this.state.loginContactNo + ":" + this.state.loginFormPassword));
+            xhrLogin.setRequestHeader("Authorization", "Basic " + window.btoa(this.state.loginContactNumber + ":" + this.state.loginFormPassword));
             xhrLogin.setRequestHeader("Content-Type", "application/json");
             xhrLogin.setRequestHeader("Cache-Control", "no-cache");
             xhrLogin.send(dataLogin);
@@ -280,27 +280,27 @@ class Header extends Component {
 
     loginFormValidation = () => {
         let loginContactNumberRequired = "dispNone";
-        let loginPasswordRequired = "dispNone";
+        let loginFormPasswordRequired = "dispNone";
         let inValidLoginContact = "dispNone";
         let isFormValid = true;
-        if (this.state.loginContactNo === "") {
+        if (this.state.loginContactNumber === "") {
             loginContactNumberRequired = "dispBlock";
             isFormValid = false;
         }
         if (this.state.loginFormPassword === "") {
-            loginPasswordRequired = "dispBlock"
+            loginFormPasswordRequired = "dispBlock"
             isFormValid = false;
         }
-        if (this.state.loginContactNo !== "") {
-            const contactNo = "[7-9][0-9]{9}";
-            if (!this.state.loginContactNo.match(contactNo)) {
+        if (this.state.loginContactNumber !== "") {
+            const contactNo = "[1-9][0-9]{9}";
+            if (!this.state.loginContactNumber.match(contactNo)) {
                 inValidLoginContact = "dispBlock"
                 isFormValid = false;
             }
         }
         this.setState({
-            loginContactNoRequired: loginContactNumberRequired,
-            loginPasswordRequired: loginPasswordRequired,
+            loginContactNumberRequired: loginContactNumberRequired,
+            loginFormPasswordRequired: loginFormPasswordRequired,
             inValidLoginContact: inValidLoginContact
         })
         return (isFormValid);
@@ -312,8 +312,8 @@ class Header extends Component {
             let dataSignUp = JSON.stringify({
                 "contact_number": this.state.signUpContactNo,
                 "email_address": this.state.email,
-                "first_name": this.state.firstName,
-                "last_name": this.state.lastName,
+                "first_name": this.state.signupFormFirstName,
+                "last_name": this.state.signupFormLastName,
                 "password": this.state.signUpPassword
             });
 
@@ -348,8 +348,8 @@ class Header extends Component {
     }
 
     signUpFormValidation = () => {
-        let firstNameRequired = "dispNone";
-        let emailRequired = "dispNone";
+        let signupFormFirstNameRequired = "dispNone";
+        let signupFormEmailRequired = "dispNone";
         let signUpPasswordRequired = "dispNone";
         let signUpContactNumberRequired = "dispNone";
         let validPasswordHelpText = "dispNone";
@@ -357,12 +357,12 @@ class Header extends Component {
         let invalidEmail = "dispNone";
         let signUpFormValid = true;
 
-        if (this.state.firstName === "") {
-            firstNameRequired = "dispBlock";
+        if (this.state.signupFormFirstName === "") {
+            signupFormFirstNameRequired = "dispBlock";
             signUpFormValid = false;
         }
         if (this.state.email === "") {
-            emailRequired = "dispBlock";
+            signupFormEmailRequired = "dispBlock";
             signUpFormValid = false;
         }
         if (this.state.email !== "") {
@@ -377,8 +377,8 @@ class Header extends Component {
             signUpFormValid = false;
         }
         if (this.state.signUpContactNo !== "") {
-            var contactNo = "[7-9][0-9]{9}";
-            if (!this.state.signUpContactNo.match(contactNo)) {
+          const contactNo = "[1-9][0-9]{9}";
+          if (!this.state.signUpContactNo.match(contactNo)) {
                 contactHelpText = "dispBlock"
                 signUpFormValid = false;
             }
@@ -395,8 +395,8 @@ class Header extends Component {
             }
         }
         this.setState({
-            firstNameRequired: firstNameRequired,
-            emailRequired: emailRequired,
+            signupFormFirstNameRequired: signupFormFirstNameRequired,
+            signupFormEmailRequired: signupFormEmailRequired,
             contactHelpText: contactHelpText,
             signUpPasswordRequired: signUpPasswordRequired,
             signUpContactNoRequired: signUpContactNumberRequired,
@@ -538,8 +538,8 @@ class Header extends Component {
                         <TabContainer>
                             <FormControl required className="model-form-control">
                                 <InputLabel htmlFor="login-contact-no">Contact No.</InputLabel>
-                                <Input id="login-contact-no" className="input-fields" fullWidth={true} type="text" logincontactno={this.state.loginContactNo} onChange={this.loginContactNumberChangeHandler} value={this.state.loginContactNo} />
-                                <FormHelperText className={this.state.loginContactNoRequired}>
+                                <Input id="login-contact-no" className="input-fields" fullWidth={true} type="text" logincontactno={this.state.loginContactNumber} onChange={this.loginContactNumberChangeHandler} value={this.state.loginContactNumber} />
+                                <FormHelperText className={this.state.loginContactNumberRequired}>
                                     <span className='red'>required</span>
                                 </FormHelperText>
                                 <FormHelperText className={this.state.inValidLoginContact}>
@@ -552,7 +552,7 @@ class Header extends Component {
                             <FormControl required className="model-form-control">
                                 <InputLabel htmlFor="login-password">Password</InputLabel>
                                 <Input id="login-password" className="input-fields" type="password" loginpassword={this.state.loginFormPassword} fullWidth={true} onChange={this.loginPasswordChangeHandler} value={this.state.loginFormPassword} />
-                                <FormHelperText className={this.state.loginPasswordRequired}>
+                                <FormHelperText className={this.state.loginFormPasswordRequired}>
                                     <span className='red'>required</span>
                                 </FormHelperText>
                                 <FormHelperText className={this.state.invalidPassword}>
@@ -572,8 +572,8 @@ class Header extends Component {
                         <TabContainer>
                             <FormControl required className="model-form-control">
                                 <InputLabel htmlFor="first-name">First Name</InputLabel>
-                                <Input id="first-name" className="input-fields" firstname={this.state.firstName} fullWidth={true} onChange={this.firstNameChangeHandler} value={this.state.firstName} />
-                                <FormHelperText className={this.state.firstNameRequired}>
+                                <Input id="first-name" className="input-fields" firstname={this.state.signupFormFirstName} fullWidth={true} onChange={this.firstNameChangeHandler} value={this.state.signupFormFirstName} />
+                                <FormHelperText className={this.state.signupFormFirstNameRequired}>
                                     <span className="red">required</span>
                                 </FormHelperText>
                             </FormControl>
@@ -581,14 +581,14 @@ class Header extends Component {
                             <br />
                             <FormControl className="model-form-control">
                                 <InputLabel htmlFor="last-name">Last Name</InputLabel>
-                                <Input id="last-name" className="input-fields" lastname={this.state.lastName} fullWidth={true} onChange={this.lastNameChangeHandler} value={this.state.lastName} />
+                                <Input id="last-name" className="input-fields" lastname={this.state.signupFormLastName} fullWidth={true} onChange={this.lastNameChangeHandler} value={this.state.signupFormLastName} />
                             </FormControl>
                             <br />
                             <br />
                             <FormControl required className="model-form-control">
                                 <InputLabel htmlFor="email">Email</InputLabel>
                                 <Input id="email" className="input-fields" type="email" email={this.state.email} fullWidth={true} onChange={this.emailChangeHandler} value={this.state.email} />
-                                <FormHelperText className={this.state.emailRequired}>
+                                <FormHelperText className={this.state.signupFormEmailRequired}>
                                     <span className="red">required</span>
                                 </FormHelperText>
                                 <FormHelperText className={this.state.invalidEmail}>
