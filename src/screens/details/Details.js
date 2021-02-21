@@ -228,10 +228,10 @@ render() {
                     <img src={this.state.restaurantDetails.photoURL} alt="Restaurant" height="215px" width="275px" />
                 </div>
                 <div className="restaurant-info">
-                    <div className="restaurant-name-details">
-                        <Typography variant="h5" component="h5" className="restaurant-name-details">{this.state.restaurantDetails.name}</Typography>
+                    <div className="restaurant-name">
+                        <Typography variant="h5" component="h5" className="restaurant-name">{this.state.restaurantDetails.name}</Typography>
                         <Typography variant="subtitle1" component="p" className={classes.restaurantLocation}>{this.state.restaurantDetails.locality}</Typography>
-                        <Typography variant="subtitle1" component="p" className="restaurant-categories">{this.state.restaurantDetails.categoriesName}</Typography>
+                        <Typography variant="subtitle1" component="p" className="restaurant-category">{this.state.restaurantDetails.categoriesName}</Typography>
                     </div>
                     <div className="restaurant-review-rating-cost-container">
                         <div className="restaurant-review-rating-container">
@@ -239,21 +239,21 @@ render() {
                                 <FontAwesomeIcon icon="star" size="sm" color="black" />
                                 <Typography variant="subtitle1" component="p">{this.state.restaurantDetails.rating}</Typography>
                             </div>
-                            <Typography variant="caption" component="p" className="text-rating-price"  >AVERAGE RATING BY {<span className="restaurant-NoOfReviews">{this.state.restaurantDetails.noOfCustomerRated}</span>} CUSTOMERS</Typography>
+                            <Typography variant="caption" component="p" className="text-rating-cost"  >AVERAGE RATING BY {<span className="restaurant-NoOfReviews">{this.state.restaurantDetails.noOfCustomerRated}</span>} CUSTOMERS</Typography>
                         </div>
                         <div className="restaurant-avg-meal-cost-container">
                             <div className="restaurant-avg-meal-cost">
                                 <i className="fa fa-inr" aria-hidden="true"></i>
-                                <Typography variant="subtitle1" component="p" className="avg-meal-cost">{this.state.restaurantDetails.avgCost}</Typography>
+                                <Typography variant="subtitle1" component="p" className="avg-cost">{this.state.restaurantDetails.avgCost}</Typography>
                             </div>
-                            <Typography variant="caption" component="p" className="text-rating-price" >AVERAGE COST FOR TWO PEOPLE</Typography>
+                            <Typography variant="caption" component="p" className="text-rating-cost" >AVERAGE COST FOR TWO PEOPLE</Typography>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="cart-menu-details-container">
+            <div className="menu-details-cart-container">
 
-                <div className="menu-info">
+                <div className="menu-details">
                     {this.state.categories.map(category => (
                         <div key={category.id}>
                             <Typography variant="overline" component="p" className={classes.categoryName} >{category.category_name}</Typography>
@@ -261,12 +261,12 @@ render() {
                             {category.item_list.map(item => (
                                 <div className='item-menu-container' key={item.id}>
                                     <FontAwesomeIcon icon="circle" size="sm" color={item.item_type === "NON_VEG" ? "#BE4A47" : "#5A9A5B"} />
-                                    <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px"}} className="menuitem-name" >{item.item_name[0].toUpperCase() + item.item_name.slice(1)}</Typography>
-                                    <div className="cart-item-cost">
+                                    <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px"}} className="menu-item-name" >{item.item_name[0].toUpperCase() + item.item_name.slice(1)}</Typography>
+                                    <div className="item-cost">
                                         <i className="fa fa-inr" aria-hidden="true"/>
-                                        <Typography variant="subtitle1" component="p" className="cart-item-cost" >{item.price.toFixed(2)}</Typography>
+                                        <Typography variant="subtitle1" component="p" className="item-cost" >{item.price.toFixed(2)}</Typography>
                                     </div>
-                                    <IconButton className="add-item-button" aria-label="add" onClick={() => this.addItemButtonHandler(item)}>
+                                    <IconButton className="add-button" aria-label="add" onClick={() => this.addItemButtonHandler(item)}>
                                         <AddIcon />
                                     </IconButton>
                                 </div>
@@ -295,8 +295,8 @@ render() {
                             {this.state.cartItems.map(cartItem => (
                             <div className="cart-menu-item-container" key={cartItem.id}>
                                 <i className="fa fa-stop-circle-o" aria-hidden="true" style={{color: cartItem.itemType === "NON_VEG" ? "#BE4A47" : "#5A9A5B"}}/>
-                                <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px"}} className="menuitem-name" id="cart-menu-item-name" >{cartItem.name[0].toUpperCase() + cartItem.name.slice(1)}</Typography>
-                                <div className="cart-quantity-container">
+                                <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px",width:"150px"}} className="menu-item-name" id="cart-menu-item-name" >{cartItem.name[0].toUpperCase() + cartItem.name.slice(1)}</Typography>
+                                <div className="quantity-container">
                                 <IconButton className={classes.cartTotalItemButton} id="minus-button" aria-label="remove" onClick = {() => this.minusItemButtonHandler(cartItem)} >
                                     <FontAwesomeIcon icon="minus" size="xs" color="black" />
                                 </IconButton>
@@ -305,9 +305,9 @@ render() {
                                     <FontAwesomeIcon icon="plus" size="xs" color="black" />
                                 </IconButton>
                                 </div>
-                                <div className="cart-item-cost">
+                                <div className="item-cost">
                                     <i className="fa fa-inr" aria-hidden="true" style={{color: 'grey'}}/>
-                                    <Typography variant="subtitle1" component="p" className="cart-item-cost" id="cart-item-price">{cartItem.totalAmount.toFixed(2)}</Typography>
+                                    <Typography variant="subtitle1" component="p" className="item-cost" id="cart-item-price">{cartItem.totalAmount.toFixed(2)}</Typography>
                                 </div>
                             </div>
                             ))}
@@ -315,7 +315,7 @@ render() {
                                 <Typography variant="subtitle2" component="p" style={{fontWeight:"bold"}} className="total-amount">TOTAL AMOUNT</Typography>
                                 <div className="total-cost">
                                     <i className="fa fa-inr" aria-hidden="true" />
-                                    <Typography variant="subtitle1" component="p" className="cart-item-cost" id="cart-total-price">{this.state.totalAmount.toFixed(2)}</Typography>
+                                    <Typography variant="subtitle1" component="p" className="item-cost" id="cart-total-price">{this.state.totalAmount.toFixed(2)}</Typography>
                                 </div>
                             </div>
 
