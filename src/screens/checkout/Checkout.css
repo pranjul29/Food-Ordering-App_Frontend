@@ -70,7 +70,7 @@
 
 
 /* Style for the menu item container */
-.menu-item-container{
+.item-menu-container{
     display: flex;
     align-items: center;
 }

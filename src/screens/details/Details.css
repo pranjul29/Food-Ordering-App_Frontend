@@ -1,5 +1,5 @@
 
-.restaurant-details-container{
+.restaurant-info-container{
     display: flex;
     align-items: center;
     padding: 25px;
@@ -7,91 +7,91 @@
 }
 
 @media screen and (max-width:600px){
-    .restaurant-details-container{
+    .restaurant-info-container{
         flex-direction: column;
     }
-    .restaurant-details{
+    .restaurant-info{
         text-align: center;
     }
-    .restaurant-avg-cost-container{
+    .restaurant-avg-meal-cost-container{
         margin-left: auto;
     }
-    .restaurant-rating{
+    .restaurant-review-rating{
         align-self: center;
 
     }
-    .restaurant-avg-cost{
+    .restaurant-avg-meal-cost{
         place-content: center;
     }
    
 
 }
 
-.restaurant-rating-cost-container{
+.restaurant-review-rating-cost-container{
     display: flex;
     align-items: center;
 }
 
 @media screen and (min-width:600px){
-    .restaurant-details{
+    .restaurant-info{
         margin-left: 75px;
         width: 100%;
     }
 }
-.restaurant-avg-cost-container{
+.restaurant-avg-meal-cost-container{
     display: flex;
     flex-direction: column;
     margin-left: auto;
 }
 
-.restaurant-rating{
+.restaurant-review-rating{
     display: flex;
     align-items: baseline;
 
 }
 
-.restaurant-avg-cost{
+.restaurant-avg-meal-cost{
     display: flex;
     align-items: baseline;
     
 }
 
-.restaurant-rating-container{
+.restaurant-review-rating-container{
     display: flex;
     flex-direction: column;
 }
 
 @media screen and (min-width:1000px){
-    .restaurant-avg-cost-container{
+    .restaurant-avg-meal-cost-container{
         margin-left: 350px;
     }
 }
 
-.restaurant-NoOfCustomerRated{
+.restaurant-NoOfReviews{
     font-weight: bold;
 }
 
-.item-price{
+.cart-item-cost{
     display:flex;
     align-items: baseline;
     margin-left: auto;
 }
 
-#cart-item-price{
+#cart-item-cost{
     color: grey;
 }
 
-#minus-button{
+#item-minus-button{
     margin-left:auto;
 }
 
-#cart-menu-item-name{
+#menu-item-name-cart{
     width:150px;
     margin-left: 40px;
     color: grey;
 }
 
-.menu-item-container{
+.item-menu-container{
     display: flex;
     align-items: center;
 }
@@ -102,22 +102,22 @@
 
 }
 
-.total-price{
+.total-cost{
     display:flex;
     align-items: baseline;
 }
 
-.total-amount-container{
+.cart-total-amount-container{
     display: flex;
     align-items: baseline;
     justify-content: space-between;
 }
 
-#cart-total-price{
+#cart-total-cost{
     font-weight: bold;
 }
 
-.menu-details-cart-container{
+.cart-menu-details-container{
     display: flex;
     padding: 30px;
     margin-left: 30px;
@@ -126,7 +126,7 @@
 }
 
 @media screen and (min-width:600px){
-    .menu-details{
+    .menu-info{
      width:45%;
 }
 
@@ -136,14 +136,14 @@
 }
 
 @media screen and (max-width:600px){
-    .menu-details-cart-container{
+    .cart-menu-details-container{
        flex-direction: column;
        margin-left: 16px;
        margin-right: 16px;
        padding: 0px;
 
     }
-    .menu-details{
+    .menu-info{
         width:100%;
     }
     .my-cart{
@@ -152,41 +152,36 @@
     }
 }
 
-.quantity-container{
+.cart-quantity-container{
     display: flex;
     align-items: center;
     margin-left: auto;
 }
 
-.text-rating-cost{
+.text-rating-price{
   text-overflow: clip;
   width: 145px;
   color: grey;
 }
 
-.restaurant-name{
+.restaurant-name-details{
   padding: 8px 0px;
   font-size: 30px;
 }
 
-.restaurant-category{
+.restaurant-categories{
   padding: 8px 0px;
 }
 
-.avg-cost{
+.avg-meal-cost{
   padding-left: 5px;
 }
-.item-price{
+.cart-item-cost{
   padding-left: 5px;
 }
-.add-button{
+.add-item-button{
   margin-left: 25px;
 }
-.menu-item-name{
+.menuitem-name{
   margin-left: 20px;
 }
-/*
- restaurantName: { //Style for the Restaurant name.
-        'padding': '8px 0px 8px 0px',
-        'font-size': '30px',
-    }, */

@@ -826,7 +826,7 @@ class Checkout extends Component {
                             <CardContent className={classes.cardContent}>
                                 <Typography variant='subtitle1' component='p' className={classes.restaurantName}>{this.state.restaurantDetails.name}</Typography>
                                 {this.state.cartItems.map(cartItem => (
-                                    <div className="menu-item-container" key={cartItem.id}>
+                                    <div className="item-menu-container" key={cartItem.id}>
                                         <i className="fa fa-stop-circle-o" aria-hidden="true" style={{ color: cartItem.itemType === "NON_VEG" ? "#BE4A47" : "#5A9A5B" }}></i>
                                         <Typography variant="subtitle1" component="p" className={classes.menuItemName} id="summary-menu-item-name" >{cartItem.name[0].toUpperCase() + cartItem.name.slice(1)}</Typography>
                                         <Typography variant="subtitle1" component="p" className={classes.itemQuantity}>{cartItem.quantity}</Typography>

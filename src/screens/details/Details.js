@@ -26,19 +26,7 @@ import "./Details.css"
 
 const styles = (theme => ({
 
-    /*shoppingCart: {
-        color: 'black',
-        'background-color': 'white',
-        width: '60px',
-        height: '50px',
-        'margin-left': '-20px',
-    },*/
-    /*cartHeader: { //Style for the Cart Header containing the icon and title.
-        'padding-bottom': '0px',
-        'margin-left': '10px',
-        'margin-right': '10px'
-    },*/
-    cartItemButton: { //Style for the button in the cart.
+    cartTotalItemButton: {
         padding: '10px',
         'border-radius': '0',
         color: '#fdd835',
@@ -46,21 +34,6 @@ const styles = (theme => ({
             'background-color': '#ffee58',
         }
     },
-    cardContent: { //Style for the content for card.
-        'padding-top': '0px',
-        'margin-left': '10px',
-        'margin-right': '10px'
-    },
-    /*totalAmount: { //Style for the the total amount.
-        'font-weight': 'bold'
-    },*/
-    checkOutButton: { //Style for the Checkout button in the cart card. 
-        'font-weight': '400'
-    }
-
-
-
-
 }))
 
 class Details extends Component {
@@ -78,9 +51,6 @@ class Details extends Component {
         }
     }
 
-    //This method is called when the components are mounted.
-    //This method inturn calls the api get restaurant by id endpoints and updates the state with the relevant details.
-    //Then the page is re-rendered with the data received from the api. 
     componentDidMount() {
         let data = null;
         let that = this;
@@ -95,7 +65,6 @@ class Details extends Component {
                 response.categories.forEach(category => {
                     categoriesName.push(category.category_name);
                 });
-                //Creating Restaurant object containing relevant details.
                 let restaurantDetails = {
                     id: response.id,
                     name: response.restaurant_name,
@@ -117,29 +86,22 @@ class Details extends Component {
 
         })
 
-        //Calling the api to get details of the restaurant by id.
         xhrRestaurantDetails.open('GET', this.props.baseUrl + 'restaurant/' + this.props.match.params.id)
         xhrRestaurantDetails.send(data);
 
     }
 
-
-    //This Method handles the add item button in the menu list.
-    //This method pushes the item to the cart array in the state if it is not present &
-    //if the item is already present then only increases the quantity of the item.
-    //This method takes the item as the parameter.
-    //After each update a relevant snackbar message is shown.
-    itemAddButtonClickHandler = (item) => {
+    addItemButtonHandler = (item) => {
         let cartItems = this.state.cartItems;
         let itemPresentInCart = false;
-        cartItems.forEach(cartItem => { //running a loop to find if the item is already present in the cart.
-            if (cartItem.id === item.id) { // Checking if the parameter item.id matches with the item in the cart.
+        cartItems.forEach(cartItem => {
+            if (cartItem.id === item.id) {
                 itemPresentInCart = true;
-                cartItem.quantity++; //increasing only the quantity
-                cartItem.totalAmount = cartItem.price * cartItem.quantity;  //Updating the price
+                cartItem.quantity++;
+                cartItem.totalAmount = cartItem.price * cartItem.quantity;
             }
         })
-        if (!itemPresentInCart) { //Checking if the item is present if not then new item is created and pushed to the cart.
+        if (!itemPresentInCart) {
             let cartItem = {
                 id:item.id,
                 name: item.item_name,
@@ -150,13 +112,11 @@ class Details extends Component {
             }
             cartItems.push(cartItem);
         }
-        //updating the total amount for the cart.
         let totalAmount = 0;
         cartItems.forEach(cartItem =>{
             totalAmount = totalAmount + cartItem.totalAmount; 
         })
 
-        //Updating the state.
         this.setState({
             ...this.state,
             cartItems: cartItems,
@@ -167,30 +127,23 @@ class Details extends Component {
         })
     }
 
-    //This Method is called when the minus button in the cart is clicked.
-    //It take item as the parameter 
-    //This method updates the quantity of the item and reduces by 1 for each click.
-    //If the item is reduced to zero the the item is removed from the cart.
-    //After each update a relevant snackbar message is shown.
-    minusButtonClickHandler =  (item) => {
+    minusItemButtonHandler =  (item) => {
         let cartItems = this.state.cartItems;
         let index =  cartItems.indexOf(item);
         let itemRemoved = false;
-        cartItems[index].quantity--; //Reducing the quantity of the item
-        if(cartItems[index].quantity === 0){ //Checking if the quantity is zero to remove from the cart
+        cartItems[index].quantity--;
+        if(cartItems[index].quantity === 0){
             cartItems.splice(index,1);
             itemRemoved = true;
         }else{
-            cartItems[index].totalAmount = cartItems[index].price * cartItems[index].quantity; //Updating the Price of the item
+            cartItems[index].totalAmount = cartItems[index].price * cartItems[index].quantity;
         }
 
-        // updating the total amount of the cart
         let totalAmount = 0;
         cartItems.forEach(cartItem =>{
             totalAmount = totalAmount + cartItem.totalAmount;
         })
 
-        //Updating the state
         this.setState({
             ...this.state,
             cartItems: cartItems,
@@ -201,23 +154,17 @@ class Details extends Component {
         })
     }
 
-    //This method is called when the add button in the cart is clicked.
-    //This method takes item as the parameter.
-    //This method finds the corresponding item and updates it quantity by 1 for each click.
-    //After each update a relevant snackbar message is shown.
-    cartAddButtonClickHandler = (item) => {
+    cartAddButtonHandler = (item) => {
         let cartItems = this.state.cartItems;
         let index =  cartItems.indexOf(item);
-        cartItems[index].quantity++; //Updating the quantity ofthe relevant item in the cart
-        cartItems[index].totalAmount = cartItems[index].price * cartItems[index].quantity; //updating the total price of the item
-        
-        //Updating the Total amount ofthe cart 
+        cartItems[index].quantity++;
+        cartItems[index].totalAmount = cartItems[index].price * cartItems[index].quantity;
+
         let totalAmount = 0;
         cartItems.forEach(cartItem =>{
             totalAmount = totalAmount + cartItem.totalAmount;
         })
 
-        //Updating the state
         this.setState({
             ...this.state,
             cartItems: cartItems,
@@ -228,26 +175,22 @@ class Details extends Component {
         })
     } 
 
-    //This Method is called when the checkout button in the cart is clicked
-    //This method checks for two condition such as if the item is added to the cart & if the user is logged in
-    //If both the condition is satisfied then pushes to next checkout screen with the cart & restaurant details.
-    //For Both the condition relevant snack bar message is displayed.
-    checkOutButtonClickHandler= () => {
+    checkoutButtonHandler= () => {
         let cartItems =  this.state.cartItems;
         let isLoggedIn = sessionStorage.getItem("access-token") == null ? false : true;
-        if(cartItems.length === 0){ //Checking if cart is empty 
+        if(cartItems.length === 0){
             this.setState({
             ...this.state,
             snackBarOpen: true,
             snackBarMessage: "Please add an item to your cart!",
             })
-        }else if(!isLoggedIn){ //Checking if customer is not loggedIn.
+        }else if(!isLoggedIn){
             this.setState({
                 ...this.state,
                 snackBarOpen: true,
                 snackBarMessage: "Please login first!",
             })
-        }else{ //If all the condition are satisfied user pushed to the checkout screen
+        }else{
             this.props.history.push({
                 pathname: '/checkout',
                 cartItems: this.state.cartItems,
@@ -256,8 +199,6 @@ class Details extends Component {
         }
     }
 
-
-    //Handles Close function of the snackBar
     snackBarClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -269,8 +210,7 @@ class Details extends Component {
         })
     }
 
-    //this method changes the visibility of badge when the modal is open in the details page.
-    changeBadgeDisplay = () => {
+    toggleBadgeDisplay = () => {
         this.setState({
             ...this.state,
             badgeVisible:!this.state.badgeVisible,
@@ -278,57 +218,55 @@ class Details extends Component {
     }
 
 render() {
-    // Styles are stored in the const classes
     const { classes } = this.props;
     return (
 
         <div>
-            <Header baseUrl={this.props.baseUrl} showHeaderSearchField={false} changeBadgeDisplay = {this.changeBadgeDisplay}/>
-            <div className="restaurant-details-container">
+            <Header baseUrl={this.props.baseUrl} showHeaderSearchField={false} changeBadgeDisplay = {this.toggleBadgeDisplay}/>
+            <div className="restaurant-info-container">
                 <div>
                     <img src={this.state.restaurantDetails.photoURL} alt="Restaurant" height="215px" width="275px" />
                 </div>
-                <div className="restaurant-details">
-                    <div className="restaurant-name">
-                        <Typography variant="h5" component="h5" className="restaurant-name">{this.state.restaurantDetails.name}</Typography>
+                <div className="restaurant-info">
+                    <div className="restaurant-name-details">
+                        <Typography variant="h5" component="h5" className="restaurant-name-details">{this.state.restaurantDetails.name}</Typography>
                         <Typography variant="subtitle1" component="p" className={classes.restaurantLocation}>{this.state.restaurantDetails.locality}</Typography>
-                        <Typography variant="subtitle1" component="p" className="restaurant-category">{this.state.restaurantDetails.categoriesName}</Typography>
+                        <Typography variant="subtitle1" component="p" className="restaurant-categories">{this.state.restaurantDetails.categoriesName}</Typography>
                     </div>
-                    <div className="restaurant-rating-cost-container">
-                        <div className="restaurant-rating-container">
-                            <div className="restaurant-rating">
+                    <div className="restaurant-review-rating-cost-container">
+                        <div className="restaurant-review-rating-container">
+                            <div className="restaurant-review-rating">
                                 <FontAwesomeIcon icon="star" size="sm" color="black" />
                                 <Typography variant="subtitle1" component="p">{this.state.restaurantDetails.rating}</Typography>
                             </div>
-                            <Typography variant="caption" component="p" className="text-rating-cost"  >AVERAGE RATING BY {<span className="restaurant-NoOfCustomerRated">{this.state.restaurantDetails.noOfCustomerRated}</span>} CUSTOMERS</Typography>
+                            <Typography variant="caption" component="p" className="text-rating-price"  >AVERAGE RATING BY {<span className="restaurant-NoOfReviews">{this.state.restaurantDetails.noOfCustomerRated}</span>} CUSTOMERS</Typography>
                         </div>
-                        <div className="restaurant-avg-cost-container">
-                            <div className="restaurant-avg-cost">
+                        <div className="restaurant-avg-meal-cost-container">
+                            <div className="restaurant-avg-meal-cost">
                                 <i className="fa fa-inr" aria-hidden="true"></i>
-                                <Typography variant="subtitle1" component="p" className="avg-cost">{this.state.restaurantDetails.avgCost}</Typography>
+                                <Typography variant="subtitle1" component="p" className="avg-meal-cost">{this.state.restaurantDetails.avgCost}</Typography>
                             </div>
-                            <Typography variant="caption" component="p" className="text-rating-cost" >AVERAGE COST FOR TWO PEOPLE</Typography>
+                            <Typography variant="caption" component="p" className="text-rating-price" >AVERAGE COST FOR TWO PEOPLE</Typography>
                         </div>
                     </div>
                 </div>
             </div>
-            {/* Menu and Cart Card Container */}
-            <div className="menu-details-cart-container">
+            <div className="cart-menu-details-container">
 
-                <div className="menu-details">
-                    {this.state.categories.map(category => ( //Iterating for each category in the categories array to display each category
+                <div className="menu-info">
+                    {this.state.categories.map(category => (
                         <div key={category.id}>
                             <Typography variant="overline" component="p" className={classes.categoryName} >{category.category_name}</Typography>
                             <Divider />
-                            {category.item_list.map(item => ( //Iterating over each item to display each items in the category.
-                                <div className='menu-item-container' key={item.id}>
+                            {category.item_list.map(item => (
+                                <div className='item-menu-container' key={item.id}>
                                     <FontAwesomeIcon icon="circle" size="sm" color={item.item_type === "NON_VEG" ? "#BE4A47" : "#5A9A5B"} />
-                                    <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px"}} className="menu-item-name" >{item.item_name[0].toUpperCase() + item.item_name.slice(1)}</Typography>
-                                    <div className="item-price">
-                                        <i className="fa fa-inr" aria-hidden="true"></i>
-                                        <Typography variant="subtitle1" component="p" className="item-price" >{item.price.toFixed(2)}</Typography>
+                                    <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px"}} className="menuitem-name" >{item.item_name[0].toUpperCase() + item.item_name.slice(1)}</Typography>
+                                    <div className="cart-item-cost">
+                                        <i className="fa fa-inr" aria-hidden="true"/>
+                                        <Typography variant="subtitle1" component="p" className="cart-item-cost" >{item.price.toFixed(2)}</Typography>
                                     </div>
-                                    <IconButton className="add-button" aria-label="add" onClick={() => this.itemAddButtonClickHandler(item)}>
+                                    <IconButton className="add-item-button" aria-label="add" onClick={() => this.addItemButtonHandler(item)}>
                                         <AddIcon />
                                     </IconButton>
                                 </div>
@@ -336,7 +274,6 @@ render() {
                         </div>
                     ))}
                 </div>
-                {/* Cart Card */}
                 <div className="my-cart">
                     <Card className={classes.myCart}>
                         <CardHeader
@@ -354,35 +291,35 @@ render() {
                             style={{paddingBottom:"0px",marginLeft:"10px",marginRight:"10px"}}
                             className="cart-header"
                         />
-                        <CardContent className={classes.cardContent}>
-                            {this.state.cartItems.map(cartItem => ( //Iterating over each item in cartItem to show in the cart.
+                        <CardContent style={{paddingTop:"0px",marginLeft:"10px",marginRight:"10px"}} >
+                            {this.state.cartItems.map(cartItem => (
                             <div className="cart-menu-item-container" key={cartItem.id}>
-                                <i className="fa fa-stop-circle-o" aria-hidden="true" style={{color:cartItem.itemType === "NON_VEG" ? "#BE4A47" : "#5A9A5B"}}></i>
-                                <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px"}} className="menu-item-name" id="cart-menu-item-name" >{cartItem.name[0].toUpperCase() + cartItem.name.slice(1)}</Typography>
-                                <div className="quantity-container">
-                                <IconButton className={classes.cartItemButton} id="minus-button" aria-label="remove" onClick = {() => this.minusButtonClickHandler(cartItem)} >
+                                <i className="fa fa-stop-circle-o" aria-hidden="true" style={{color: cartItem.itemType === "NON_VEG" ? "#BE4A47" : "#5A9A5B"}}/>
+                                <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px"}} className="menuitem-name" id="cart-menu-item-name" >{cartItem.name[0].toUpperCase() + cartItem.name.slice(1)}</Typography>
+                                <div className="cart-quantity-container">
+                                <IconButton className={classes.cartTotalItemButton} id="minus-button" aria-label="remove" onClick = {() => this.minusItemButtonHandler(cartItem)} >
                                     <FontAwesomeIcon icon="minus" size="xs" color="black" />
                                 </IconButton>
                                 <Typography variant="subtitle1" component="p" className={classes.itemQuantity}>{cartItem.quantity}</Typography>
-                                <IconButton className={classes.cartItemButton} aria-label="add"  onClick = {() => this.cartAddButtonClickHandler(cartItem)}>
+                                <IconButton className={classes.cartTotalItemButton} aria-label="add"  onClick = {() => this.cartAddButtonHandler(cartItem)}>
                                     <FontAwesomeIcon icon="plus" size="xs" color="black" />
                                 </IconButton>
                                 </div>
-                                <div className="item-price">
-                                    <i className="fa fa-inr" aria-hidden="true" style={{ color: 'grey' }}></i>
-                                    <Typography variant="subtitle1" component="p" className="item-price" id="cart-item-price">{cartItem.totalAmount.toFixed(2)}</Typography>
+                                <div className="cart-item-cost">
+                                    <i className="fa fa-inr" aria-hidden="true" style={{color: 'grey'}}/>
+                                    <Typography variant="subtitle1" component="p" className="cart-item-cost" id="cart-item-price">{cartItem.totalAmount.toFixed(2)}</Typography>
                                 </div>
                             </div>
                             ))}
-                            <div className="total-amount-container">
+                            <div className="cart-total-amount-container">
                                 <Typography variant="subtitle2" component="p" style={{fontWeight:"bold"}} className="total-amount">TOTAL AMOUNT</Typography>
-                                <div className="total-price">
-                                    <i className="fa fa-inr" aria-hidden="true" ></i>
-                                    <Typography variant="subtitle1" component="p" className="item-price" id="cart-total-price">{this.state.totalAmount.toFixed(2)}</Typography>
+                                <div className="total-cost">
+                                    <i className="fa fa-inr" aria-hidden="true" />
+                                    <Typography variant="subtitle1" component="p" className="cart-item-cost" id="cart-total-price">{this.state.totalAmount.toFixed(2)}</Typography>
                                 </div>
                             </div>
 
-                            <Button variant="contained" color='primary' fullWidth={true} className={classes.checkOutButton} onClick = {this.checkOutButtonClickHandler}>CHECKOUT</Button>
+                            <Button variant="contained" color='primary' fullWidth={true} style={{fontWeight:"400"}} className="checkout-button" onClick = {this.checkoutButtonHandler}>CHECKOUT</Button>
 
                         </CardContent>
 
