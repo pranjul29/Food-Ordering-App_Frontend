@@ -208,7 +208,7 @@ class Detail extends Component {
         {!isLoading && (
           <RestaurantDetailsCard
             restaurant={restaurant}
-          ></RestaurantDetailsCard>
+          />
         )}
         {isLoading ? (
           <div
@@ -270,7 +270,7 @@ class Detail extends Component {
                   );
                 })}
               </Grid>
-              <Grid item md={1}></Grid>
+              <Grid item md={1}/>
               <Grid item md={4} xs={12}>
                 <Card variant="outlined">
                   <CardContent>

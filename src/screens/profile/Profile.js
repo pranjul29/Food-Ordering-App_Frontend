@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Typography } from '@material-ui/core';
+import React, {Component} from 'react';
+import {Typography} from '@material-ui/core';
 import Header from "../../common/header/Header";
-import { Redirect } from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 
 
 class Profile extends Component {
@@ -16,7 +16,7 @@ class Profile extends Component {
   //This method is called every time the page is rendered to check if the customer is logged in if not then redirected to the home page.
   redirectToHome = () => {
     if (!this.state.isLoggedIn) {
-      return <Redirect to="/" />
+      return <Redirect to="/"/>
     }
   }
   logoutAndRedirectToHome = () => {
@@ -27,8 +27,8 @@ class Profile extends Component {
   }
 
 
-  render(){
-    return(
+  render() {
+    return (
       <div>
         {this.redirectToHome()}
         <Header baseUrl={this.props.baseUrl} logoutAndRedirectToHome={this.logoutAndRedirectToHome}/>

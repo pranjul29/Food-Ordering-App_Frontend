@@ -1,99 +1,103 @@
 
-.checkout-box-container{
-    display:flex;
-    padding-top: 20px;
-    padding-right:16px; 
-    justify-content: space-between;
+.checkout-box-container {
+  display: flex;
+  padding-top: 20px;
+  padding-right: 16px;
+  justify-content: space-between;
 }
 
-@media screen and (max-width:670px){
-    .checkout-box-container{
-        flex-direction: column;
-        padding: 20px 16px;
-    }
-    .stepper-block-container{
-        width: 100%;
-        padding: 0px;
-    }
-    .summary-block-container{
-        width:100%;
-        margin-top: 5px;
-    }
+@media screen and (max-width: 670px) {
+  .checkout-box-container {
+    flex-direction: column;
+    padding: 20px 16px;
+  }
+
+  .stepper-block-container {
+    width: 100%;
+    padding: 0px;
+  }
+
+  .summary-block-container {
+    width: 100%;
+    margin-top: 5px;
+  }
 }
 
-@media (min-width:670px) and (max-width:1200px){
-    .stepper-block-container{
-        width: 60%;
-    }
-    .summary-block-container{
-        width:40%;
-        margin-top: 5px;
-    }
+@media (min-width: 670px) and (max-width: 1200px) {
+  .stepper-block-container {
+    width: 60%;
+  }
+
+  .summary-block-container {
+    width: 40%;
+    margin-top: 5px;
+  }
 }
 
-.existing-new-address-tabs{
-    background-color: rgb(63,81,180);
-    color: white;
-    height:50px;
+.existing-new-address-tabs {
+  background-color: rgb(63, 81, 180);
+  color: white;
+  height: 50px;
 }
 
-.tile-grid-list-container{
-    padding:16px 8px 16px 16px;
+.tile-grid-list-container {
+  padding: 16px 8px 16px 16px;
 }
 
 .dispNone {
-    display: none;
+  display: none;
 }
 
 .dispBlock {
-    display: block;
+  display: block;
 }
 
-@media screen and (min-width:1200px){
-    .stepper-block-container{
-      width: 74%;
-    }
-    .summary-block-container{
-        width:25%;
-        margin-top: 5px;
-    }
+@media screen and (min-width: 1200px) {
+  .stepper-block-container {
+    width: 74%;
+  }
+
+  .summary-block-container {
+    width: 25%;
+    margin-top: 5px;
+  }
 }
 
-.menu-item-container{
-    display: flex;
-    align-items: center;
+.menu-item-container {
+  display: flex;
+  align-items: center;
 }
 
-.item-price-summary-container{
-    display:flex;
-    align-items: baseline;
-    color: grey;
+.item-price-summary-container {
+  display: flex;
+  align-items: baseline;
+  color: grey;
 }
 
-#item-price-summary{
-    margin-left: 6px;
+#item-price-summary {
+  margin-left: 6px;
 }
 
-#net-amount-summary{
-    margin-left: 6px;
+#net-amount-summary {
+  margin-left: 6px;
 }
 
-.total-amount{
-    display:flex;
-    align-items: baseline;
+.total-amount {
+  display: flex;
+  align-items: baseline;
 }
 
-.discount-coupon-container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0px;
+.discount-coupon-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0px;
 }
 
-.amount-label-container{
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin: 10px 0px;
+.amount-label-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 10px 0px;
 }
 
