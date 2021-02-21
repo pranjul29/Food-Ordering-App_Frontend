@@ -102,27 +102,27 @@ class Checkout extends Component {
             value: 0,
             accessToken: sessionStorage.getItem('access-token'),
             addresses: [],
-            selectedAddress: "",
-            flatBuildingName: "",
-            flatBuildingNameRequired: "dispNone",
-            locality: "",
-            localityRequired: "dispNone",
-            city: "",
-            cityRequired: "dispNone",
+            currentSelectedAddress: "",
+            newAddressFlatBuildingName: "",
+            newAddressFlatBuildingNameRequired: "dispNone",
+            newAddressLocality: "",
+            newAddressLocalityRequired: "dispNone",
+            newAddressCity: "",
+            newAddressCityRequired: "dispNone",
             selectedState: "",
             stateRequired: "dispNone",
-            pincode: "",
-            pincodeRequired: "dispNone",
-            pincodeHelpText: "dispNone",
-            states: [],
-            selectedPayment: "",
-            payment: [],
+            newAddressPincode: "",
+            newAddressPincodeRequired: "dispNone",
+            pincodeValidationText: "dispNone",
+            allStataes: [],
+            selectedPaymentMethod: "",
+            paymentMethods: [],
             cartItems: props.location.cartItems ? props.location.cartItems : [] ,
             restaurantDetails: props.location.restaurantDetails ? props.location.restaurantDetails : {name:null},
             coupon: null,
-            couponName: "",
-            couponNameRequired: "dispNone",
-            couponNameHelpText: "dispNone",
+            discountCouponName: "",
+            discountCouponNameRequired: "dispNone",
+            discountCouponNameValidationText: "dispNone",
             snackBarOpen: false,
             snackBarMessage: "",
             transition: Fade,
@@ -139,7 +139,7 @@ class Checkout extends Component {
 
     nextButtonHandler = () => {
         if (this.state.value === 0) {
-            if (this.state.selectedAddress !== "") {
+            if (this.state.currentSelectedAddress !== "") {
                 let activeStep = this.state.activeStep;
                 activeStep++;
                 this.setState({
@@ -155,7 +155,7 @@ class Checkout extends Component {
             }
         }
         if(this.state.activeStep === 1){
-            if(this.state.selectedPayment === ""){
+            if(this.state.selectedPaymentMethod === ""){
                 let activeStep = this.state.activeStep;
                 this.setState({
                     ...this.state,
@@ -192,7 +192,7 @@ class Checkout extends Component {
     radioPaymentChangeHandler = (event) => {
         this.setState({
             ...this.state,
-            selectedPayment: event.target.value,
+            selectedPaymentMethod: event.target.value,
         })
     }
 
@@ -208,7 +208,7 @@ class Checkout extends Component {
                     let states = JSON.parse(xhrStates.responseText).states;
                     that.setState({
                         ...that.state,
-                        states: states,
+                      allStataes: states,
                     })
                 }
             })
@@ -223,7 +223,7 @@ class Checkout extends Component {
                     let payment = JSON.parse(xhrPayment.responseText).paymentMethods;
                     that.setState({
                         ...that.state,
-                        payment: payment,
+                      paymentMethods: payment,
                     })
                 }
             })
@@ -292,10 +292,10 @@ class Checkout extends Component {
     saveAddressHandler = () => {
         if (this.saveAddressFormValidation()) {
             let newAddressData = JSON.stringify({
-                "city": this.state.city,
-                "flat_building_name": this.state.flatBuildingName,
-                "locality": this.state.locality,
-                "pincode": this.state.pincode,
+                "city": this.state.newAddressCity,
+                "flat_building_name": this.state.newAddressFlatBuildingName,
+                "locality": this.state.newAddressLocality,
+                "pincode": this.state.newAddressPincode,
                 "state_uuid": this.state.selectedState,
             })
 
@@ -321,21 +321,21 @@ class Checkout extends Component {
     }
 
     saveAddressFormValidation = () => {
-        let flatBuildingNameRequired = "dispNone";
-        let cityRequired = "dispNone";
-        let localityRequired = "dispNone";
+        let newAddressFlatBuildingNameRequired = "dispNone";
+        let newAddressCityRequired = "dispNone";
+        let newAddressLocalityRequired = "dispNone";
         let stateRequired = "dispNone";
-        let pincodeRequired = "dispNone";
-        let pincodeHelpText = "dispNone";
+        let newAddressPincodeRequired = "dispNone";
+        let pincodeValidationText = "dispNone";
         let saveAddressFormValid = true;
 
-        if (this.state.flatBuildingName === "") {
-            flatBuildingNameRequired = "dispBlock";
+        if (this.state.newAddressFlatBuildingName === "") {
+            newAddressFlatBuildingNameRequired = "dispBlock";
             saveAddressFormValid = false;
         }
 
-        if (this.state.locality === "") {
-            localityRequired = "dispBlock";
+        if (this.state.newAddressLocality === "") {
+            newAddressLocalityRequired = "dispBlock";
             saveAddressFormValid = false;
         }
 
@@ -344,30 +344,30 @@ class Checkout extends Component {
             saveAddressFormValid = false;
         }
 
-        if (this.state.city === "") {
-            cityRequired = "dispBlock";
+        if (this.state.newAddressCity === "") {
+            newAddressCityRequired = "dispBlock";
             saveAddressFormValid = false;
         }
 
-        if (this.state.pincode === "") {
-            pincodeRequired = "dispBlock";
+        if (this.state.newAddressPincode === "") {
+            newAddressPincodeRequired = "dispBlock";
             saveAddressFormValid = false;
         }
-        if (this.state.pincode !== "") {
+        if (this.state.newAddressPincode !== "") {
             var pincodePattern = /^\d{6}$/;
-            if (!this.state.pincode.match(pincodePattern)) {
-                pincodeHelpText = "dispBlock";
+            if (!this.state.newAddressPincode.match(pincodePattern)) {
+                pincodeValidationText = "dispBlock";
                 saveAddressFormValid = false;
             }
         }
         this.setState({
             ...this.state,
-            flatBuildingNameRequired: flatBuildingNameRequired,
-            cityRequired: cityRequired,
-            localityRequired: localityRequired,
+            newAddressFlatBuildingNameRequired: newAddressFlatBuildingNameRequired,
+            newAddressCityRequired: newAddressCityRequired,
+            newAddressLocalityRequired: newAddressLocalityRequired,
             stateRequired: stateRequired,
-            pincodeRequired: pincodeRequired,
-            pincodeHelpText: pincodeHelpText,
+            newAddressPincodeRequired: newAddressPincodeRequired,
+            pincodeValidationText: pincodeValidationText,
         })
 
         return saveAddressFormValid
@@ -376,21 +376,21 @@ class Checkout extends Component {
     inputNewAddressFlatBuildingNameChangeHandler = (event) => {
         this.setState({
             ...this.state,
-            flatBuildingName: event.target.value,
+          newAddressFlatBuildingName: event.target.value,
         })
     }
 
     inputNewAddressLocalityChangeHandler = (event) => {
         this.setState({
             ...this.state,
-            locality: event.target.value,
+          newAddressLocality: event.target.value,
         })
     }
 
     inputNewAddressCityChangeHandler = (event) => {
         this.setState({
             ...this.state,
-            city: event.target.value,
+          newAddressCity: event.target.value,
         })
     }
 
@@ -404,27 +404,27 @@ class Checkout extends Component {
     inputNewAddressPincodeChangeHandler = (event) => {
         this.setState({
             ...this.state,
-            pincode: event.target.value,
+          newAddressPincode: event.target.value,
         })
     }
 
     inputNewAddressCouponNameChangeHandler = (event) => {
         this.setState({
             ...this.state,
-            couponName: event.target.value,
+            discountCouponName: event.target.value,
         })
     }
 
     applyButtonHandler = () => {
         let isCouponNameValid = true;
-        let couponNameRequired = "dispNone";
-        let couponNameHelpText = "dispNone";
-        if (this.state.couponName === "") {
+        let discountCouponNameRequired = "dispNone";
+        let discountCouponNameValidationText = "dispNone";
+        if (this.state.discountCouponName === "") {
             isCouponNameValid = false;
-            couponNameRequired = "dispBlock";
+            discountCouponNameRequired = "dispBlock";
             this.setState({
-                couponNameRequired: couponNameRequired,
-                couponNameHelpText: couponNameHelpText,
+                discountCouponNameRequired: discountCouponNameRequired,
+                discountCouponNameValidationText: discountCouponNameValidationText,
             })
         }
 
@@ -443,14 +443,14 @@ class Checkout extends Component {
                     } else {
                         that.setState({
                             ...that.state,
-                            couponNameHelpText: "dispBlock",
-                            couponNameRequired: "dispNone"
+                            discountCouponNameValidationText: "dispBlock",
+                            discountCouponNameRequired: "dispNone"
                         })
                     }
                 }
             })
 
-            xhrCoupon.open('GET', this.props.baseUrl + '/order/coupon/' + this.state.couponName)
+            xhrCoupon.open('GET', this.props.baseUrl + '/order/coupon/' + this.state.discountCouponName)
             xhrCoupon.setRequestHeader('authorization', 'Bearer ' + this.state.accessToken)
             xhrCoupon.setRequestHeader("Content-Type", "application/json");
             xhrCoupon.setRequestHeader("Cache-Control", "no-cache");
@@ -470,12 +470,12 @@ class Checkout extends Component {
       });
     })
     let newOrderData = JSON.stringify({ //Creating the data as required.
-      "address_id": this.state.selectedAddress,
+      "address_id": this.state.currentSelectedAddress,
       "bill": Math.floor(Math.random() * 100),
       "coupon_id": this.state.coupon !== null ? this.state.coupon.id : "",
       "discount": this.getDiscountedAmount(),
       "item_quantities": item_quantities,
-      "payment_id": this.state.selectedPayment,
+      "payment_id": this.state.selectedPaymentMethod,
       "restaurant_id": this.state.restaurantDetails.id,
     })
     console.log(newOrderData);
@@ -508,11 +508,11 @@ class Checkout extends Component {
 
     addressSelectedHandler = (addressId) => {
         let addresses = this.state.addresses;
-        let selectedAddress = "";
+        let currentSelectedAddress = "";
         addresses.forEach(address => {
             if (address.id === addressId) {
                 address.selected = true;
-                selectedAddress = address.id;
+                currentSelectedAddress = address.id;
             } else {
                 address.selected = false;
             }
@@ -520,7 +520,7 @@ class Checkout extends Component {
         this.setState({
             ...this.state,
             addresses: addresses,
-            selectedAddress: selectedAddress
+            currentSelectedAddress: currentSelectedAddress
         })
     }
 
@@ -619,17 +619,17 @@ class Checkout extends Component {
                                                     <TabContainer className={classes.newAddressForm}>
                                                         <FormControl required style={{width:"200px"}} className="form-control">
                                                             <InputLabel htmlFor="flat-building-name">Flat / Building No.</InputLabel>
-                                                            <Input id="flat-building-name" className="input-fields" flatbuildingname={this.state.flatBuildingName} fullWidth={true} onChange={this.inputNewAddressFlatBuildingNameChangeHandler} value={this.state.flatBuildingName} />
-                                                            <FormHelperText className={this.state.flatBuildingNameRequired}>
+                                                            <Input id="flat-building-name" className="input-fields" flatbuildingname={this.state.newAddressFlatBuildingName} fullWidth={true} onChange={this.inputNewAddressFlatBuildingNameChangeHandler} value={this.state.newAddressFlatBuildingName} />
+                                                            <FormHelperText className={this.state.newAddressFlatBuildingNameRequired}>
                                                                 <span className="red">required</span>
                                                             </FormHelperText>
                                                         </FormControl>
                                                         <br />
                                                         <br />
-                                                        <FormControl style={{width:"200px"}} className="form-control">
+                                                        <FormControl required style={{width:"200px"}} className="form-control">
                                                             <InputLabel htmlFor="locality">Locality</InputLabel>
-                                                            <Input id="locality" className="input-fields" locality={this.state.locality} fullWidth={true} onChange={this.inputNewAddressLocalityChangeHandler} value={this.state.locality} />
-                                                            <FormHelperText className={this.state.localityRequired}>
+                                                            <Input id="locality" className="input-fields" locality={this.state.newAddressLocality} fullWidth={true} onChange={this.inputNewAddressLocalityChangeHandler} value={this.state.newAddressLocality} />
+                                                            <FormHelperText className={this.state.newAddressLocalityRequired}>
                                                                 <span className="red">required</span>
                                                             </FormHelperText>
                                                         </FormControl>
@@ -637,8 +637,8 @@ class Checkout extends Component {
                                                         <br />
                                                         <FormControl required style={{width:"200px"}} className="form-control">
                                                             <InputLabel htmlFor="city">City</InputLabel>
-                                                            <Input id="city" className="input-fields" type="text" city={this.state.city} fullWidth={true} onChange={this.inputNewAddressCityChangeHandler} value={this.state.city} />
-                                                            <FormHelperText className={this.state.cityRequired}>
+                                                            <Input id="city" className="input-fields" type="text" city={this.state.newAddressCity} fullWidth={true} onChange={this.inputNewAddressCityChangeHandler} value={this.state.newAddressCity} />
+                                                            <FormHelperText className={this.state.newAddressCityRequired}>
                                                                 <span className="red">required</span>
                                                             </FormHelperText>
                                                         </FormControl>
@@ -647,7 +647,7 @@ class Checkout extends Component {
                                                         <FormControl required style={{width:"200px"}} className="form-control">
                                                             <InputLabel htmlFor="state">State</InputLabel>
                                                             <Select id="state" style={{width:"100%"}} className="select-field" state={this.state.selectedState} onChange={this.selectStateChangeHandler} MenuProps={{ style: { marginTop: '50px', maxHeight: '300px' } }} value={this.state.selectedState}>
-                                                                {this.state.states.map(state => (
+                                                                {this.state.allStataes.map(state => (
                                                                     <MenuItem value={state.id} key={state.id} >{state.state_name}</MenuItem>
                                                                 ))}
                                                             </Select>
@@ -659,11 +659,11 @@ class Checkout extends Component {
                                                         <br />
                                                         <FormControl required style={{width:"200px"}} className="form-control">
                                                             <InputLabel htmlFor="pincode">Pincode</InputLabel>
-                                                            <Input id="pincode" className="input-fields" pincode={this.state.pincode} fullWidth={true} onChange={this.inputNewAddressPincodeChangeHandler} value={this.state.pincode} />
-                                                            <FormHelperText className={this.state.pincodeRequired}>
+                                                            <Input id="pincode" className="input-fields" pincode={this.state.newAddressPincode} fullWidth={true} onChange={this.inputNewAddressPincodeChangeHandler} value={this.state.newAddressPincode} />
+                                                            <FormHelperText className={this.state.newAddressPincodeRequired}>
                                                                 <span className="red">required</span>
                                                             </FormHelperText>
-                                                            <FormHelperText className={this.state.pincodeHelpText}>
+                                                            <FormHelperText className={this.state.pincodeValidationText}>
                                                                 <span className="red">Pincode must contain only numbers and must be 6 digits long</span>
                                                             </FormHelperText>
                                                         </FormControl>
@@ -680,8 +680,8 @@ class Checkout extends Component {
                                                     <FormLabel component="legend">
                                                         Select Mode of Payment
                                                     </FormLabel>
-                                                    <RadioGroup aria-label="payment" name="payment" value={this.state.selectedPayment} onChange={this.radioPaymentChangeHandler}>
-                                                        {this.state.payment.map(payment => (
+                                                    <RadioGroup aria-label="payment" name="payment" value={this.state.selectedPaymentMethod} onChange={this.radioPaymentChangeHandler}>
+                                                        {this.state.paymentMethods.map(payment => (
                                                             <FormControlLabel key={payment.id} value={payment.id} control={<Radio />} label={payment.payment_name} />
                                                         ))
                                                         }
@@ -752,11 +752,11 @@ class Checkout extends Component {
                                 <div className="discount-coupon-container">
                                     <FormControl className={classes.formControlCoupon}>
                                         <InputLabel htmlFor="coupon">Coupon Code</InputLabel>
-                                        <FilledInput id="coupon" className={classes.couponInput} value={this.state.couponName} onChange={this.inputNewAddressCouponNameChangeHandler} placeholder="Ex: FLAT30" />
-                                        <FormHelperText className={this.state.couponNameRequired}>
+                                        <FilledInput id="coupon" className={classes.couponInput} value={this.state.discountCouponName} onChange={this.inputNewAddressCouponNameChangeHandler} placeholder="Ex: FLAT30" />
+                                        <FormHelperText className={this.state.discountCouponNameRequired}>
                                             <span className="red">required</span>
                                         </FormHelperText>
-                                        <FormHelperText className={this.state.couponNameHelpText}>
+                                        <FormHelperText className={this.state.discountCouponNameValidationText}>
                                             <span className="red">invalid coupon</span>
                                         </FormHelperText>
                                     </FormControl>
