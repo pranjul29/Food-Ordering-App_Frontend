@@ -251,9 +251,9 @@ render() {
                     </div>
                 </div>
             </div>
-            <div className="menu-details-cart-container">
+            <div className="cart-menu-details-container">
 
-                <div className="menu-details">
+                <div className="menu-details-cart">
                     {this.state.categories.map(category => (
                         <div key={category.id}>
                             <Typography variant="overline" component="p" className={classes.categoryName} >{category.category_name}</Typography>
@@ -274,7 +274,7 @@ render() {
                         </div>
                     ))}
                 </div>
-                <div className="my-cart">
+                <div className="my-cart-card">
                     <Card className={classes.myCart}>
                         <CardHeader
                             avatar={
@@ -293,7 +293,7 @@ render() {
                         />
                         <CardContent style={{paddingTop:"0px",marginLeft:"10px",marginRight:"10px"}} >
                             {this.state.cartItems.map(cartItem => (
-                            <div className="cart-menu-item-container" key={cartItem.id}>
+                            <div className="menu-item-cart-container" key={cartItem.id}>
                                 <i className="fa fa-stop-circle-o" aria-hidden="true" style={{color: cartItem.itemType === "NON_VEG" ? "#BE4A47" : "#5A9A5B"}}/>
                                 <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px",width:"150px"}} className="menu-item-name" id="cart-menu-item-name" >{cartItem.name[0].toUpperCase() + cartItem.name.slice(1)}</Typography>
                                 <div className="quantity-container">
@@ -313,7 +313,7 @@ render() {
                             ))}
                             <div className="cart-total-amount-container">
                                 <Typography variant="subtitle2" component="p" style={{fontWeight:"bold"}} className="total-amount">TOTAL AMOUNT</Typography>
-                                <div className="total-cost">
+                                <div className="cart-total-cost">
                                     <i className="fa fa-inr" aria-hidden="true" />
                                     <Typography variant="subtitle1" component="p" className="item-cost" id="cart-total-price">{this.state.totalAmount.toFixed(2)}</Typography>
                                 </div>
