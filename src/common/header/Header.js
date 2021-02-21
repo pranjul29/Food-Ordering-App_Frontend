@@ -490,7 +490,12 @@ class Header extends Component {
         return (
             <div>
                 <header className="page-header">
-                    <FastfoodIcon className="page-logo" fontSize="large" htmlColor="white" onClick={this.redirectToHome}/>
+                  {window.location.pathname === "/" ?
+                    <FastfoodIcon className="page-logo" fontSize="large" htmlColor="white"/> :
+                    <a href="/">
+                      <FastfoodIcon className="page-logo" fontSize="large" htmlColor="white"/>
+                    </a>
+                  }
                     {this.props.showHeaderSearchField === true &&
                         <span className="header-search-box">
                             <Input className={classes.searchText}
