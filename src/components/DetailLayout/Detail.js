@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {getRestaurantById} from '../../api';
-import RestaurantDetailsCard from '../../components/RestaurantDetailsCard';
+import RestaurantDetailsCard from '../RestaurantDetailsCard';
 import HeaderLayout from '../../common/HeaderLayout/Header';
 import {
   Badge,
@@ -25,7 +25,7 @@ import {
   Remove as RemoveIcon,
   ShoppingCart as ShoppingCartIcon,
 } from '@material-ui/icons/';
-import {MessageSnackbar} from '../../components';
+import {MessageSnackbar} from '../index';
 import joinClassNames from 'classnames';
 
 const useStyles = (theme) => ({
