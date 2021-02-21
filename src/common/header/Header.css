@@ -1,65 +1,91 @@
-@media screen and (min-width: 601px) {
-  .header {
-    padding: 10px 15px 10px 15px;
-    background-color: hsl(199deg 20% 18%);
-    color: aliceblue;
+.page-header {
     display: flex;
+    background-color: rgb(37, 50, 56);
+    padding: 10px;
+    align-items: center;
     justify-content: space-between;
-  }
 }
 
-.search-bar {
-  width: 350px;
-  display: flex;
-  align-items: center;
+.page-logo {
+    padding-left: 10px;
+    align-self: center;
 }
 
 @media screen and (max-width: 600px) {
-  .header {
-    width: 100%;
-    height: 140px;
-    padding: 10px 15px 10px 15px;
-    background-color: hsl(199deg 20% 18%);
-    color: aliceblue;
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .page-logo {
+        align-self: flex-start;
+    }
+}
+
+.header-search-box {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .search-bar {
-    width: 250px;
-  }
-
-  .logo .search-bar .userButton {
-    padding: 20px;
-  }
+    align-items: center;
+    width: 300px;
+    align-self: flex-start;
+    height: 40px;
 }
 
-div .search-bar ::after {
-  border-bottom: 2px solid white !important;
+#header-search-icon {
+    height: 27px;
+    padding: 0px 0px 0px 10px;
 }
 
-.tabs {
-  margin-bottom: 20px;
+.header-login-button-icon {
+    padding-right: 10px;
 }
 
-.tab-container {
-  padding: 0;
-  text-align: center;
-  overflow-y: auto;
-  height: 100%;
+.header-profile-button-icon {
+    padding-right: 10px;
 }
 
-.red {
-  display: inline-block;
-  width: 195px;
-  color: red;
+.header-login-modal-tabs {
+    margin-bottom: 20px;
 }
 
 .dispNone {
-  display: None;
+    display: none;
 }
 
 .dispBlock {
-  display: block;
+    display: block;
+}
+
+.red {
+    color: red;
+}
+
+#header-profile-menu-model {
+    margin-top: 30px;
+    padding: 0px;
+    margin-left: 20px;
+}
+
+.header-login-button {
+    font-weight: 400;
+    margin: 8px;
+}
+
+.header-form-button {
+    font-weight: 400;
+}
+.login-signup-tab {
+    font-weight: 400;
+}
+.model-form-control {
+    width: 80%;
+}
+.header-profile-button {
+    color:#c2c2c2;
+    text-transform: none;
+    font-weight: 400;
+    padding: 8px;
+}
+.menu-list {
+    padding: 0px;
 }
