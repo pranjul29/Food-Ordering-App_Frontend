@@ -1,5 +1,5 @@
 
-.checkout-container{
+.checkout-box-container{
     display:flex;
     padding-top: 20px;
     padding-right:16px; 
@@ -7,37 +7,37 @@
 }
 
 @media screen and (max-width:670px){
-    .checkout-container{
+    .checkout-box-container{
         flex-direction: column;
         padding: 20px 16px;
     }
-    .stepper-container{
+    .stepper-block-container{
         width: 100%;
         padding: 0px;
     }
-    .summary-container{
+    .summary-block-container{
         width:100%;
         margin-top: 5px;
     }
 }
 
 @media (min-width:670px) and (max-width:1200px){
-    .stepper-container{
+    .stepper-block-container{
         width: 60%;
     }
-    .summary-container{
+    .summary-block-container{
         width:40%;
         margin-top: 5px;
     }
 }
 
-.address-tabs{
+.existing-new-address-tabs{
     background-color: rgb(63,81,180);
     color: white;
     height:50px;
 }
 
-.grid-list-tile-container{
+.tile-grid-list-container{
     padding:16px 8px 16px 16px;
 }
 
@@ -50,47 +50,47 @@
 }
 
 @media screen and (min-width:1200px){
-    .stepper-container{
+    .stepper-block-container{
       width: 74%;
     }
-    .summary-container{
+    .summary-block-container{
         width:25%;
         margin-top: 5px;
     }
 }
 
-.item-menu-container{
+.menu-item-container{
     display: flex;
     align-items: center;
 }
 
-.summary-item-price-container{
+.item-price-summary-container{
     display:flex;
     align-items: baseline;
     color: grey;
 }
 
-#summary-item-price{
+#item-price-summary{
     margin-left: 6px;
 }
 
-#summary-net-amount{
+#net-amount-summary{
     margin-left: 6px;
 }
 
-.amount{
+.total-amount{
     display:flex;
     align-items: baseline;
 }
 
-.coupon-container{
+.discount-coupon-container{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 10px 0px;
 }
 
-.label-amount-container{
+.amount-label-container{
     display: flex;
     align-items: baseline;
     justify-content: space-between;

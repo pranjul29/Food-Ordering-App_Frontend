@@ -91,7 +91,7 @@
     color: grey;
 }
 
-.item-menu-container{
+.menu-item-container{
     display: flex;
     align-items: center;
 }

@@ -40,14 +40,14 @@ class Details extends Component {
     constructor() {
         super()
         this.state = {
-            restaurantDetails: [],
+            currentRestaurantDetails: [],
             categories: [],
             cartItems: [],
             totalAmount:0,
-            snackBarOpen: false,
-            snackBarMessage: "",
+            snackBarVisible: false,
+            snackBarText: "",
             transition: Fade,
-            badgeVisible:false,
+            badgeDisplayToggle:false,
         }
     }
 
@@ -65,7 +65,7 @@ class Details extends Component {
                 response.categories.forEach(category => {
                     categoriesName.push(category.category_name);
                 });
-                let restaurantDetails = {
+                let currentRestaurantDetails = {
                     id: response.id,
                     name: response.restaurant_name,
                     photoURL: response.photo_URL,
@@ -78,7 +78,7 @@ class Details extends Component {
                 let categories = response.categories;
                 that.setState({
                     ...that.state,
-                    restaurantDetails: restaurantDetails,
+                    currentRestaurantDetails: currentRestaurantDetails,
                     categories: categories,
 
                 })
@@ -120,8 +120,8 @@ class Details extends Component {
         this.setState({
             ...this.state,
             cartItems: cartItems,
-            snackBarOpen: true,
-            snackBarMessage: "Item added to cart!",
+            snackBarVisible: true,
+            snackBarText: "Item added to cart!",
             totalAmount:totalAmount,
         
         })
@@ -147,8 +147,8 @@ class Details extends Component {
         this.setState({
             ...this.state,
             cartItems: cartItems,
-            snackBarOpen: true,
-            snackBarMessage: itemRemoved ? "Item removed from cart!" :"Item quantity decreased by 1!",
+            snackBarVisible: true,
+            snackBarText: itemRemoved ? "Item removed from cart!" :"Item quantity decreased by 1!",
             totalAmount:totalAmount,
 
         })
@@ -168,8 +168,8 @@ class Details extends Component {
         this.setState({
             ...this.state,
             cartItems: cartItems,
-            snackBarOpen: true,
-            snackBarMessage: "Item quantity increased by 1!",
+            snackBarVisible: true,
+            snackBarText: "Item quantity increased by 1!",
             totalAmount:totalAmount,
 
         })
@@ -181,20 +181,20 @@ class Details extends Component {
         if(cartItems.length === 0){
             this.setState({
             ...this.state,
-            snackBarOpen: true,
-            snackBarMessage: "Please add an item to your cart!",
+            snackBarVisible: true,
+            snackBarText: "Please add an item to your cart!",
             })
         }else if(!isLoggedIn){
             this.setState({
                 ...this.state,
-                snackBarOpen: true,
-                snackBarMessage: "Please login first!",
+                snackBarVisible: true,
+                snackBarText: "Please login first!",
             })
         }else{
             this.props.history.push({
                 pathname: '/checkout',
                 cartItems: this.state.cartItems,
-                restaurantDetails: this.state.restaurantDetails,
+              restaurantDetails: this.state.currentRestaurantDetails,
             })
         }
     }
@@ -205,15 +205,15 @@ class Details extends Component {
         }
         this.setState({
             ...this.state,
-            snackBarMessage: "",
-            snackBarOpen: false,
+            snackBarText: "",
+            snackBarVisible: false,
         })
     }
 
     toggleBadgeDisplay = () => {
         this.setState({
             ...this.state,
-            badgeVisible:!this.state.badgeVisible,
+            badgeDisplayToggle:!this.state.badgeDisplayToggle,
         })
     }
 
@@ -225,26 +225,26 @@ render() {
             <Header baseUrl={this.props.baseUrl} showHeaderSearchField={false} changeBadgeDisplay = {this.toggleBadgeDisplay}/>
             <div className="restaurant-info-container">
                 <div>
-                    <img src={this.state.restaurantDetails.photoURL} alt="Restaurant" height="215px" width="275px" />
+                    <img src={this.state.currentRestaurantDetails.photoURL} alt="Restaurant" height="215px" width="275px" />
                 </div>
                 <div className="restaurant-info">
                     <div className="restaurant-name">
-                        <Typography variant="h5" component="h5" className="restaurant-name">{this.state.restaurantDetails.name}</Typography>
-                        <Typography variant="subtitle1" component="p" className={classes.restaurantLocation}>{this.state.restaurantDetails.locality}</Typography>
-                        <Typography variant="subtitle1" component="p" className="restaurant-category">{this.state.restaurantDetails.categoriesName}</Typography>
+                        <Typography variant="h5" component="h5" className="restaurant-name">{this.state.currentRestaurantDetails.name}</Typography>
+                        <Typography variant="subtitle1" component="p" className={classes.restaurantLocation}>{this.state.currentRestaurantDetails.locality}</Typography>
+                        <Typography variant="subtitle1" component="p" className="restaurant-category">{this.state.currentRestaurantDetails.categoriesName}</Typography>
                     </div>
                     <div className="restaurant-review-rating-cost-container">
                         <div className="restaurant-review-rating-container">
                             <div className="restaurant-review-rating">
                                 <FontAwesomeIcon icon="star" size="sm" color="black" />
-                                <Typography variant="subtitle1" component="p">{this.state.restaurantDetails.rating}</Typography>
+                                <Typography variant="subtitle1" component="p">{this.state.currentRestaurantDetails.rating}</Typography>
                             </div>
-                            <Typography variant="caption" component="p" className="text-rating-cost"  >AVERAGE RATING BY {<span className="restaurant-NoOfReviews">{this.state.restaurantDetails.noOfCustomerRated}</span>} CUSTOMERS</Typography>
+                            <Typography variant="caption" component="p" className="text-rating-cost"  >AVERAGE RATING BY {<span className="restaurant-NoOfReviews">{this.state.currentRestaurantDetails.noOfCustomerRated}</span>} CUSTOMERS</Typography>
                         </div>
                         <div className="restaurant-avg-meal-cost-container">
                             <div className="restaurant-avg-meal-cost">
                                 <i className="fa fa-inr" aria-hidden="true"></i>
-                                <Typography variant="subtitle1" component="p" className="avg-cost">{this.state.restaurantDetails.avgCost}</Typography>
+                                <Typography variant="subtitle1" component="p" className="avg-cost">{this.state.currentRestaurantDetails.avgCost}</Typography>
                             </div>
                             <Typography variant="caption" component="p" className="text-rating-cost" >AVERAGE COST FOR TWO PEOPLE</Typography>
                         </div>
@@ -259,7 +259,7 @@ render() {
                             <Typography variant="overline" component="p" className={classes.categoryName} >{category.category_name}</Typography>
                             <Divider />
                             {category.item_list.map(item => (
-                                <div className='item-menu-container' key={item.id}>
+                                <div className='menu-item-container' key={item.id}>
                                     <FontAwesomeIcon icon="circle" size="sm" color={item.item_type === "NON_VEG" ? "#BE4A47" : "#5A9A5B"} />
                                     <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px"}} className="menu-item-name" >{item.item_name[0].toUpperCase() + item.item_name.slice(1)}</Typography>
                                     <div className="item-cost">
@@ -279,7 +279,7 @@ render() {
                         <CardHeader
                             avatar={
                                 <Avatar aria-label="shopping-cart" style={{color:"black",backgroundColor:"white",width:"60px",height:"50px",marginLeft:"-20px"}} className="shopping-cart">
-                                    <Badge badgeContent={this.state.cartItems.length} color="primary" showZero = {true} invisible={this.state.badgeVisible} className={classes.badge}>
+                                    <Badge badgeContent={this.state.cartItems.length} color="primary" showZero = {true} invisible={this.state.badgeDisplayToggle} className={classes.badge}>
                                         <ShoppingCartIcon />
                                     </Badge>
                                 </Avatar>
@@ -332,14 +332,14 @@ render() {
                         vertical: 'bottom',
                         horizontal: 'left',
                     }}
-                    open={this.state.snackBarOpen}
+                    open={this.state.snackBarVisible}
                     autoHideDuration={4000}
                     onClose={this.snackBarClose}
                     TransitionComponent={this.state.transition}
                     ContentProps={{
                         'aria-describedby': 'message-id',
                     }}
-                    message={<span id="message-id">{this.state.snackBarMessage}</span>}
+                    message={<span id="message-id">{this.state.snackBarText}</span>}
                     action={
                         <IconButton color='inherit' onClick={this.snackBarClose}>
                             <CloseIcon/>
