@@ -24,46 +24,20 @@ import '@fortawesome/fontawesome-free-regular';
 
 import "./Details.css"
 
-// Custom Styles to over ride material ui default styles
 const styles = (theme => ({
 
-    textRatingCost: { //Style for the Text of the Rating and cost.
-        'text-overflow': 'clip',
-        'width': '145px',
-        'color': 'grey'
-    },
-    restaurantName: { //Style for the Restaurant name.
-        'padding': '8px 0px 8px 0px',
-        'font-size': '30px',
-    },
-    restaurantCategory: { //Style for the Restaurant Category.
-        'padding': '8px 0px 8px 0px'
-    }, 
-    avgCost: { //Style for the Average cost.
-        'padding-left': '5px'
-    },
-    itemPrice: { //Style for the Item prices.
-        'padding-left': '5px'
-    },
-    addButton: { //Style for the add Button.
-        'margin-left': '25px',
-    },
-    menuItemName: { //Style for the Item menu name.
-        'margin-left': '20px',
-    },
-
-    shoppingCart: { //Style for the Shopping cart.
+    /*shoppingCart: {
         color: 'black',
         'background-color': 'white',
         width: '60px',
         height: '50px',
         'margin-left': '-20px',
-    },
-    cartHeader: { //Style for the Cart Header containing the icon and title.
+    },*/
+    /*cartHeader: { //Style for the Cart Header containing the icon and title.
         'padding-bottom': '0px',
         'margin-left': '10px',
         'margin-right': '10px'
-    },
+    },*/
     cartItemButton: { //Style for the button in the cart.
         padding: '10px',
         'border-radius': '0',
@@ -77,9 +51,9 @@ const styles = (theme => ({
         'margin-left': '10px',
         'margin-right': '10px'
     },
-    totalAmount: { //Style for the the total amount.
+    /*totalAmount: { //Style for the the total amount.
         'font-weight': 'bold'
-    },
+    },*/
     checkOutButton: { //Style for the Checkout button in the cart card. 
         'font-weight': '400'
     }
@@ -88,12 +62,6 @@ const styles = (theme => ({
 
 
 }))
-
-
-
-
-
-// Creating Details class component to render the home page as per the design
 
 class Details extends Component {
     constructor() {
@@ -322,9 +290,9 @@ render() {
                 </div>
                 <div className="restaurant-details">
                     <div className="restaurant-name">
-                        <Typography variant="h5" component="h5" className={classes.restaurantName}>{this.state.restaurantDetails.name}</Typography>
+                        <Typography variant="h5" component="h5" className="restaurant-name">{this.state.restaurantDetails.name}</Typography>
                         <Typography variant="subtitle1" component="p" className={classes.restaurantLocation}>{this.state.restaurantDetails.locality}</Typography>
-                        <Typography variant="subtitle1" component="p" className={classes.restaurantCategory}>{this.state.restaurantDetails.categoriesName}</Typography>
+                        <Typography variant="subtitle1" component="p" className="restaurant-category">{this.state.restaurantDetails.categoriesName}</Typography>
                     </div>
                     <div className="restaurant-rating-cost-container">
                         <div className="restaurant-rating-container">
@@ -332,14 +300,14 @@ render() {
                                 <FontAwesomeIcon icon="star" size="sm" color="black" />
                                 <Typography variant="subtitle1" component="p">{this.state.restaurantDetails.rating}</Typography>
                             </div>
-                            <Typography variant="caption" component="p" className={classes.textRatingCost}  >AVERAGE RATING BY {<span className="restaurant-NoOfCustomerRated">{this.state.restaurantDetails.noOfCustomerRated}</span>} CUSTOMERS</Typography>
+                            <Typography variant="caption" component="p" className="text-rating-cost"  >AVERAGE RATING BY {<span className="restaurant-NoOfCustomerRated">{this.state.restaurantDetails.noOfCustomerRated}</span>} CUSTOMERS</Typography>
                         </div>
                         <div className="restaurant-avg-cost-container">
                             <div className="restaurant-avg-cost">
                                 <i className="fa fa-inr" aria-hidden="true"></i>
-                                <Typography variant="subtitle1" component="p" className={classes.avgCost}>{this.state.restaurantDetails.avgCost}</Typography>
+                                <Typography variant="subtitle1" component="p" className="avg-cost">{this.state.restaurantDetails.avgCost}</Typography>
                             </div>
-                            <Typography variant="caption" component="p" className={classes.textRatingCost} >AVERAGE COST FOR TWO PEOPLE</Typography>
+                            <Typography variant="caption" component="p" className="text-rating-cost" >AVERAGE COST FOR TWO PEOPLE</Typography>
                         </div>
                     </div>
                 </div>
@@ -355,12 +323,12 @@ render() {
                             {category.item_list.map(item => ( //Iterating over each item to display each items in the category.
                                 <div className='menu-item-container' key={item.id}>
                                     <FontAwesomeIcon icon="circle" size="sm" color={item.item_type === "NON_VEG" ? "#BE4A47" : "#5A9A5B"} />
-                                    <Typography variant="subtitle1" component="p" className={classes.menuItemName} >{item.item_name[0].toUpperCase() + item.item_name.slice(1)}</Typography>
+                                    <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px"}} className="menu-item-name" >{item.item_name[0].toUpperCase() + item.item_name.slice(1)}</Typography>
                                     <div className="item-price">
                                         <i className="fa fa-inr" aria-hidden="true"></i>
-                                        <Typography variant="subtitle1" component="p" className={classes.itemPrice} >{item.price.toFixed(2)}</Typography>
+                                        <Typography variant="subtitle1" component="p" className="item-price" >{item.price.toFixed(2)}</Typography>
                                     </div>
-                                    <IconButton className={classes.addButton} aria-label="add" onClick={() => this.itemAddButtonClickHandler(item)}>
+                                    <IconButton className="add-button" aria-label="add" onClick={() => this.itemAddButtonClickHandler(item)}>
                                         <AddIcon />
                                     </IconButton>
                                 </div>
@@ -373,7 +341,7 @@ render() {
                     <Card className={classes.myCart}>
                         <CardHeader
                             avatar={
-                                <Avatar aria-label="shopping-cart" className={classes.shoppingCart}>
+                                <Avatar aria-label="shopping-cart" style={{color:"black",backgroundColor:"white",width:"60px",height:"50px",marginLeft:"-20px"}} className="shopping-cart">
                                     <Badge badgeContent={this.state.cartItems.length} color="primary" showZero = {true} invisible={this.state.badgeVisible} className={classes.badge}>
                                         <ShoppingCartIcon />
                                     </Badge>
@@ -383,13 +351,14 @@ render() {
                             titleTypographyProps={{
                                 variant: 'h6'
                             }}
-                            className={classes.cartHeader}
+                            style={{paddingBottom:"0px",marginLeft:"10px",marginRight:"10px"}}
+                            className="cart-header"
                         />
                         <CardContent className={classes.cardContent}>
                             {this.state.cartItems.map(cartItem => ( //Iterating over each item in cartItem to show in the cart.
                             <div className="cart-menu-item-container" key={cartItem.id}>
                                 <i className="fa fa-stop-circle-o" aria-hidden="true" style={{color:cartItem.itemType === "NON_VEG" ? "#BE4A47" : "#5A9A5B"}}></i>
-                                <Typography variant="subtitle1" component="p" className={classes.menuItemName} id="cart-menu-item-name" >{cartItem.name[0].toUpperCase() + cartItem.name.slice(1)}</Typography>
+                                <Typography variant="subtitle1" component="p" style={{margin:"0px 0px 0px 20px"}} className="menu-item-name" id="cart-menu-item-name" >{cartItem.name[0].toUpperCase() + cartItem.name.slice(1)}</Typography>
                                 <div className="quantity-container">
                                 <IconButton className={classes.cartItemButton} id="minus-button" aria-label="remove" onClick = {() => this.minusButtonClickHandler(cartItem)} >
                                     <FontAwesomeIcon icon="minus" size="xs" color="black" />
@@ -401,15 +370,15 @@ render() {
                                 </div>
                                 <div className="item-price">
                                     <i className="fa fa-inr" aria-hidden="true" style={{ color: 'grey' }}></i>
-                                    <Typography variant="subtitle1" component="p" className={classes.itemPrice} id="cart-item-price">{cartItem.totalAmount.toFixed(2)}</Typography>
+                                    <Typography variant="subtitle1" component="p" className="item-price" id="cart-item-price">{cartItem.totalAmount.toFixed(2)}</Typography>
                                 </div>
                             </div>
                             ))}
                             <div className="total-amount-container">
-                                <Typography variant="subtitle2" component="p" className={classes.totalAmount}>TOTAL AMOUNT</Typography>
+                                <Typography variant="subtitle2" component="p" style={{fontWeight:"bold"}} className="total-amount">TOTAL AMOUNT</Typography>
                                 <div className="total-price">
                                     <i className="fa fa-inr" aria-hidden="true" ></i>
-                                    <Typography variant="subtitle1" component="p" className={classes.itemPrice} id="cart-total-price">{this.state.totalAmount.toFixed(2)}</Typography>
+                                    <Typography variant="subtitle1" component="p" className="item-price" id="cart-total-price">{this.state.totalAmount.toFixed(2)}</Typography>
                                 </div>
                             </div>
 
